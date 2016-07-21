@@ -14,7 +14,8 @@ var App = React.createClass({
      {
       bindings: [],
       soundList: [],
-      changeKey: ""
+      changeKey: "",
+      record: [],
     }
   ),
   //once the component mounts, we set those states equal to the correct data.  We also hide the binding window using JQuery until it is required.
@@ -23,9 +24,9 @@ var App = React.createClass({
     this.serverRequest = $.get(window.location.href + "sounds", function (result) {
       this.setState({
         soundList: result,
-        bindings: qwertyMap.map(function(key) {
+        bindings: pianoMap.map(function(key) {
           return key !== 0
-            ? {key: key, path: defaultData[key], loop: false, playing: false}
+            ? {key: key, path: pianoKeys[key], loop: false, playing: false}
             : 0;
         })
       });
@@ -55,6 +56,8 @@ var App = React.createClass({
         $audio = document.getElementById(keyNumber),
         $vKey = $('#' + keyNumber).parent();
 
+    this.state.record.push([pianoKeys[keyNumber]]);
+
     // handles the ctrl+key menu drop.
     // originally checked boolean value [ event.ctrlKey ] to check to see if ctrl was
     // held down or not. Now this.state.bindTrigger is declared upon component mount to
@@ -79,8 +82,7 @@ var App = React.createClass({
 
     if ($audio.paused) {
       $audio.play()
-    }
-    else {
+    } else {
       $audio.pause()
       $vKey.removeClass('green red pressed');
     }
