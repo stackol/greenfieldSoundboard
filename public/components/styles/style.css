@@ -74,7 +74,8 @@ body {
   border-radius: 4px;
   min-width: 65px;
   max-width: 180px;
-  max-height: 50px;
+  max-height: 200px;
+  height: 200px;
   box-shadow: 10px 5px 10px 0 black;
   background-color: lightblue;
 }
