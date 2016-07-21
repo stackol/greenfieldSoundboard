@@ -139,11 +139,14 @@ var App = React.createClass({
             : <VKey key={idx} keyId = {keyBinding.key} path={keyBinding.path}/>
          )
        }
+       <Levels/>
        </div>
      </div>
    )
  }
 })
+
+
 
 //This simulates a loading page. In all of our tests the server loaded the sound
 //files instantly but by the time we noticed this we already had an awesome
