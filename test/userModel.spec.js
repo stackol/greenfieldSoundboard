@@ -40,6 +40,16 @@ describe('User Route', function() {
       });
   });
 
+  it('should properly hash passwords', function(done) {
+    User.where({email: 'test@test.com'}).fetch()
+      .then(function(user) {
+        user.comparePassword('defconbravo', function(isMatch) {
+          expect(isMatch).to.equal(true);
+          done();
+        });
+      });
+  });
+
   // after(function (done) {
   //   return knex.migrate.rollback()
   //     .then(function() {
