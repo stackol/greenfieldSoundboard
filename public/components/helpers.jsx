@@ -4,6 +4,9 @@
 //  targetKeyCode2: "/path/to/next/source.wav"
 //  ...
 //}
+var instruments = [
+  'piano'
+]
 var pianoKeys = {
   97: "/piano/c.wav",
   119: "/piano/cH.wav",
@@ -19,7 +22,7 @@ var pianoKeys = {
   106: "/piano/b.wav",
   32: "/piano/c.wav"
 }
-var defaultData = {
+var defaultKeys = {
   97: "/soundfiles/deep-techno-groove.wav",
   98: "/soundfiles/bam-bam-bolam.wav",
   99: "/soundfiles/nyan-cat.wav",

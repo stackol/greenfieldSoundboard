@@ -24,9 +24,9 @@ var App = React.createClass({
     this.serverRequest = $.get(window.location.href + "sounds", function (result) {
       this.setState({
         soundList: result,
-        bindings: pianoMap.map(function(key) {
+        bindings: qwertyMap.map(function(key) {
           return key !== 0
-            ? {key: key, path: pianoKeys[key], loop: false, playing: false}
+            ? {key: key, path: defaultKeys[key], loop: false, playing: false}
             : 0;
         })
       });
@@ -39,6 +39,19 @@ var App = React.createClass({
 
       //one event listener for all keypresses.
     window.addEventListener('keypress', this.handleKeyPress);
+  },
+
+  bindPiano: function(){
+    $.get(window.location.href + "piano", function(result){
+      this.setState({
+        soundList: result,
+        bindings: pianoMap.map(function(key){
+          return key !== 0
+          ? {key: key, path: pianoKeys[key], loop: false, playing: false}
+          : 0;
+        })
+      })
+    }.bind(this));
   },
 
 //I'm not sure why this is important but online resources say put it in and it doesn't break anything.
@@ -56,7 +69,7 @@ var App = React.createClass({
         $audio = document.getElementById(keyNumber),
         $vKey = $('#' + keyNumber).parent();
 
-    this.state.record.push([pianoKeys[keyNumber]]);
+    // this.state.record.push([pianoKeys[keyNumber]]);
 
     // handles the ctrl+key menu drop.
     // originally checked boolean value [ event.ctrlKey ] to check to see if ctrl was
@@ -143,6 +156,7 @@ var App = React.createClass({
        }
        </div>
        <Levels/>
+       <InstrumentList handleClick={ this.bindPiano } />
      </div>
    )
  }
