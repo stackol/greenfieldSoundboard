@@ -12,6 +12,9 @@ var session      = require('express-session');
 
 var app = express();
 
+var User = require('./models/user');
+
+
 // for development
 app.use(morgan('dev'));
 app.use(cookieParser()); // to read cookies
@@ -45,16 +48,49 @@ app.get('/', function(req, res) {
 
 // post for '/login'. if successful adds a user object to session
 app.post('/login', function(req, res) {
-  // if username and password correct
-    // send response success so front-end replaces hides login vies and replaces
-    // login button with logout button
+  var userEmail    = req.body.email;
+  var userPassword = req.body.password;
+
+  // fetch username by email, check password
+  new User({email: userEmail}).fetch()
+    .then(function(user) {
+      if (!user) {
+        // send response with flash, username doesn't exist
+        res.send(401, "username doesn't exist!");
+      } else {
+        //check password
+        user.comparePassword(userPassword, function(matches) {
+          if (matches) {
+            // log in
+            // front-end: replace login button with logout button
+            req.session.user = user.get('id');
+            res.send(200);
+          } else {
+            //send response with flash, wrong password
+            res.send(401, "wrong password!");
+          }
+        });
+      }
+    });
 });
 
 // post for '/signup', if successful adds user to db
 app.post('/signup', function(req, res) {
-  // if username not taken and password valid
-    // add user to db
-    // login
+  var userEmail    = req.body.email;
+  var userPassword = req.body.password;
+
+  new User({email: userEmail}).fetch()
+    .then(function(user) {
+      if (!user) {
+        // username available, add user!
+        // add user to session
+        new User({email: userEmail, password: userPassword}).save();
+        req.session.user = new User({email: userEmail}).fetch().get('id');
+        res.send(200);
+      } else {
+        res.send(401, "username taken!");
+      }
+    });
 });
 
 //returns an array of all the sounds in foley folder
