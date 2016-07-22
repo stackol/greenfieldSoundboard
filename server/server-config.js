@@ -5,7 +5,23 @@ var path = require('path');
 var passport = require('passport');
 var flash    = require('connect-flash');
 
+var morgan       = require('morgan');
+var cookieParser = require('cookie-parser');
+var bodyParser   = require('body-parser');
+var session      = require('express-session');
+
 var app = express();
+
+// for development
+app.use(morgan('dev'));
+app.use(cookieParser()); // to read cookies
+app.use(bodyParser()); // read forms
+
+// passport stuff
+app.use(session({ secret: 'bourbonistasty' }));
+app.use(passport.initialize());
+app.use(passport.session()); // persistence
+app.use(flash()); // display flash messages
 
 // set a normalized path to public.
 var rootPath = path.normalize(__dirname + '/../public');
