@@ -16,7 +16,7 @@ db.schema.hasTable('users').then(function(exists) {
   if (!exists) {
     db.schema.createTable('users', function (user) {
       user.increments('id').primary();
-      user.string('username', 100).unique();
+      user.string('email', 100).unique();
       user.string('password', 100);
       user.timestamps();
     }).then(function () {
