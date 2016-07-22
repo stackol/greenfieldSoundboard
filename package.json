@@ -7,7 +7,7 @@
     "compile": "babel public/ --out-dir compiled --presets es2015,react",
     "watch": "babel public/ --out-dir compiled --preset es2015,react --watch",
     "start": "node server/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "./node_modules/.bin/mocha",
     "dev": "webpack -d --watch",
     "build": "webpack -p"
   },
@@ -30,6 +30,8 @@
   },
   "homepage": "https://github.com/ProductivePerson/MKS-NYC-greenfield#readme",
   "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "bluebird": "^3.4.1",
     "body-parser": "^1.15.2",
     "bookshelf": "^0.10.0",
     "connect-flash": "^0.1.1",
