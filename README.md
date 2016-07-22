@@ -1,4 +1,4 @@
-# Soundboard by NaNCats
+# Soundboard by NaNCats | stackol
 
 An interactive, online soundboard.  Built by the NaNCats: [Jim](https://github.com/logosghost), [Jear](https://github.com/Jearxj), [Ian](https://github.com/ian-culleton) and [Tim](https://github.com/ProductivePerson).
 
@@ -6,7 +6,7 @@ An interactive, online soundboard.  Built by the NaNCats: [Jim](https://github.c
 
 The Soundboard uses React on Node.js, which means you will need to compile using Babel.  The server is written using Express.
 
-##Heroku: 
+##Heroku:
 https://invulnerable-baguette-95350.herokuapp.com/
 ### Quick Start
 
