@@ -19,13 +19,12 @@ var Levels = React.createClass({
 			ac: new window.AudioContext(),
 			analyzer: null,
 			// levels: null,
-			width: 200,
-			height: 200
+			width: 300,
+			height: 300
 		}
 	},
 
 	startLevels: function() {
-		// use jquery to populate audioElms with all audio html elements
 		this.setState({
 			audioElms: $('audio'),
 			container: $('canvas')[0].getContext('2d'),
@@ -68,7 +67,7 @@ var Levels = React.createClass({
 		// </canvas>
 		<div>
 			<button onClick={this.startLevels}>Click to display levels</button>
-			<canvas width={300} height={300}></canvas>
+			<canvas width={this.state.width} height={this.state.height}></canvas>
 		</div>
 		)
 	}
