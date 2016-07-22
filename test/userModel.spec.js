@@ -7,7 +7,7 @@ var User = require('../server/models/user');
 var Users = require('../server/collections/users');
 
 
-describe('User Route', function() {
+describe('User Model and Collection', function() {
   beforeEach(function(done) {
     User.where({ email: 'test@test.com' }).fetch()
       .then(function(user) {
