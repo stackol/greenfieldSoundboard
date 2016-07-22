@@ -2,6 +2,9 @@ var express = require('express');
 var fs = require('fs');
 var path = require('path');
 
+var passport = require('passport');
+var flash    = require('connect-flash');
+
 var app = express();
 
 // set a normalized path to public.
@@ -22,6 +25,20 @@ app.use('/assets', express.static(__dirname + '/assets/'));
 // At root, send index.html. It's location is appended to the rootPath.
 app.get('/', function(req, res) {
   res.sendFile(path.join(rootPath + '/index.html'));
+});
+
+// post for '/login'. if successful adds a user object to session
+app.post('/login', function(req, res) {
+  // if username and password correct
+    // send response success so front-end replaces hides login vies and replaces
+    // login button with logout button
+});
+
+// post for '/signup', if successful adds user to db
+app.post('/signup', function(req, res) {
+  // if username not taken and password valid
+    // add user to db
+    // login
 });
 
 //returns an array of all the sounds in foley folder
