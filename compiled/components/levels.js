@@ -21,17 +21,21 @@ var Levels = React.createClass({
 			ac: new window.AudioContext(),
 			analyzer: null,
 			// levels: null,
-			width: 300,
-			height: 300
+			width: 400,
+			height: 200,
+			instantiated: false
 		};
 	},
 
 	startLevels: function startLevels() {
-		this.setState({
-			audioElms: $('audio'),
-			container: $('canvas')[0].getContext('2d'),
-			analyzer: this.state.ac.createAnalyser()
-		}, this.checkLevels);
+		if (!this.state.instantiated) {
+			this.setState({
+				audioElms: $('audio'),
+				container: $('canvas')[0].getContext('2d'),
+				analyzer: this.state.ac.createAnalyser(),
+				instantiated: true
+			}, this.checkLevels);
+		}
 	},
 
 	checkLevels: function checkLevels() {
@@ -40,28 +44,25 @@ var Levels = React.createClass({
 			this.state.ac.createMediaElementSource(this.state.audioElms[i]).connect(merge);
 		}
 		merge.connect(this.state.analyzer);
-		// this.state.analyzer.fftSize = 32;
 		this.state.analyzer.connect(this.state.ac.destination);
 		setInterval(this.updateLevels, 33);
 	},
 
 	updateLevels: function updateLevels() {
-		// console.log("I am in updateLevels, our levels are ", this.state.levels);
 		var len = this.state.analyzer.frequencyBinCount;
 		var data = new Uint8Array(len);
 		this.state.analyzer.getByteFrequencyData(data);
-		// this.setState({levels : data});
 		this.state.container.clearRect(0, 0, this.state.width, this.state.height);
 		var width = this.state.width / len;
 
 		for (var i = 0; i < data.length; i++) {
 			var magnitude = data[i];
-			this.state.container.fillRect(i * width, this.state.height, 3, -magnitude * .5);
+			this.state.container.fillRect(i * width, this.state.height, 1, -magnitude * .5);
 		}
 	},
 
 	render: function render() {
-		return(
+		return (
 			// make it look pretty, use some canvas sheeeet
 			// <canvas width={this.state.width} height={this.state.height}>
 			// </canvas>
