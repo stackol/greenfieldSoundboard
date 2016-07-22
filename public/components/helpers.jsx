@@ -4,6 +4,21 @@
 //  targetKeyCode2: "/path/to/next/source.wav"
 //  ...
 //}
+var pianoKeys = {
+  97: "/piano/c.wav",
+  119: "/piano/cH.wav",
+  115: "/piano/d.wav",
+  101: "/piano/eb.wav",
+  100: "/piano/e.wav",
+  102: "/piano/f.wav",
+  116: "/piano/fH.wav",
+  103: "/piano/g.wav",
+  121: "/piano/gH.wav",
+  104: "/piano/a.wav",
+  117: "/piano/bb.wav",
+  106: "/piano/b.wav",
+  32: "/piano/c.wav"
+}
 var defaultData = {
   97: "/soundfiles/deep-techno-groove.wav",
   98: "/soundfiles/bam-bam-bolam.wav",
@@ -32,7 +47,22 @@ var defaultData = {
   121: "/soundfiles/techno-drums.wav",
   122: "/soundfiles/guitar-chord.wav"
 };
-
+var pianoMap = [
+  119,
+  101,
+  32,
+  116,
+  121,
+  117,
+  0,
+  97,
+  115,
+  100,
+  102,
+  103,
+  104,
+  106,
+]
 var qwertyMap = [
  113,
  119,
@@ -76,7 +106,7 @@ var keyCodes = {
   19 : "pause/break",
   20 : "caps lock",
   27 : "escape",
-  32 : "spacebar",
+  32 : " ",
   33 : "page up",
   34 : "page down",
   35 : "end",

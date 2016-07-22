@@ -18,7 +18,8 @@ var App = React.createClass({
     return {
       bindings: [],
       soundList: [],
-      changeKey: ""
+      changeKey: "",
+      record: []
     };
   },
   //once the component mounts, we set those states equal to the correct data.  We also hide the binding window using JQuery until it is required.
@@ -27,8 +28,8 @@ var App = React.createClass({
     this.serverRequest = $.get(window.location.href + "sounds", function (result) {
       this.setState({
         soundList: result,
-        bindings: qwertyMap.map(function (key) {
-          return key !== 0 ? { key: key, path: defaultData[key], loop: false, playing: false } : 0;
+        bindings: pianoMap.map(function (key) {
+          return key !== 0 ? { key: key, path: pianoKeys[key], loop: false, playing: false } : 0;
         })
       });
     }.bind(this));
@@ -53,6 +54,8 @@ var App = React.createClass({
         keyNumber = key.charCodeAt(),
         $audio = document.getElementById(keyNumber),
         $vKey = $('#' + keyNumber).parent();
+
+    this.state.record.push([pianoKeys[keyNumber]]);
 
     // handles the ctrl+key menu drop.
     // originally checked boolean value [ event.ctrlKey ] to check to see if ctrl was
