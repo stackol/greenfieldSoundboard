@@ -38,3 +38,6 @@ jspm_packages
 
 # Weird apple stuff
 .DS_store
+
+# compiled shit
+compiled
