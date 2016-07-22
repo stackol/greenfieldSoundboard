@@ -6,6 +6,9 @@ var knex = require('knex')(require('../server/config/bookshelf.config.js'));
 var User = require('../server/models/user');
 var Users = require('../server/collections/users');
 
+var request = require('supertest');
+var http = require('http');
+
 describe('Login, Signup, and Sessions', function() {
   beforeEach(function(done) {
     User.where({ email: 'test@test.com' }).fetch()
@@ -23,7 +26,23 @@ describe('Login, Signup, and Sessions', function() {
       });
   });
 
-  xit('should send proper post request for login', function(done) {
-    done();
+  xit('should have post "/login" route', function(done) {
+    // request.post('localhost:8000/login', {form:
+    //   { email: 'test@test.com',
+    //     password: 'defconbravo' }},
+    //     function(err, response, body) {
+    //       console.log(err);
+    //       expect(response).to.not.equal(undefined);
+    //       done();
+    //     });
+    // var user = { email: 'test@test.com', password: 'defconbravo' };
+    // request(app)
+    //   .post('/login')
+    //   .send(user)
+    //   .expect(200)
+    //   .expect("marcus is stored", done);
+    var options = {
+
+    };
   });
 });
