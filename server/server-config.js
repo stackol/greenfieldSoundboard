@@ -76,9 +76,21 @@ app.post('/login', function(req, res) {
 
 // post for '/signup', if successful adds user to db
 app.post('/signup', function(req, res) {
-  // if username not taken and password valid
-    // add user to db
-    // login
+  var userEmail    = req.body.email;
+  var userPassword = req.body.password;
+
+  new User({email: userEmail}).fetch()
+    .then(function(user) {
+      if (!user) {
+        // username available, add user!
+        // add user to session
+        new User({email: userEmail, password: userPassword}).save();
+        req.session.user = new User({email: userEmail}).fetch().get('id');
+        res.send(200);
+      } else {
+        res.send(401, "username taken!");
+      }
+    });
 });
 
 //returns an array of all the sounds in foley folder
