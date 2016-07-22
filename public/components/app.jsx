@@ -141,8 +141,8 @@ var App = React.createClass({
             : <VKey key={idx} keyId = {keyBinding.key} path={keyBinding.path}/>
          )
        }
-       <Levels/>
        </div>
+       <Levels/>
      </div>
    )
  }

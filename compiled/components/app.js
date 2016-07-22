@@ -154,9 +154,9 @@ var App = React.createClass({
           return (//yay es6
             keyBinding === 0 ? React.createElement("br", { key: idx }) : React.createElement(VKey, { key: idx, keyId: keyBinding.key, path: keyBinding.path })
           );
-        }),
-        React.createElement(Levels, null)
-      )
+        })
+      ),
+      React.createElement(Levels, null)
     );
   }
 });
