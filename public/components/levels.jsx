@@ -2,25 +2,14 @@
 
 var Levels = React.createClass({
 	getInitialState: function() {
-		// var ac = new window.AudioContext();
-		// var analyzer = ac.createAnalyser()
-		// var elms = $('audio');
-		// var merge = ac.createChannelMerger(elms.length);
-		// for (var i = 0; i < elms.length; i++) {
-		// 	ac.createMediaElementSource(elms[i]).connect(merge);
-		// }
-		// merge.connect(analyzer);
-		// analyzer.fftSize = 32;
-		// setInterval(this.updateLevels, 500);
-		// console.log(elms);
 		return {
 			audioElms: null,
 			container: null,
 			ac: new window.AudioContext(),
 			analyzer: null,
 			// levels: null,
-			width: 400,
-			height: 200,
+			width: 800,
+			height: 300,
 			instantiated: false
 		}
 	},
@@ -43,6 +32,7 @@ var Levels = React.createClass({
 		}
 		merge.connect(this.state.analyzer);
 		this.state.analyzer.connect(this.state.ac.destination);
+		this.state.analyzer.fftSize = 2048;
 		setInterval(this.updateLevels, 33);
 	},
 
@@ -52,22 +42,27 @@ var Levels = React.createClass({
 		this.state.analyzer.getByteFrequencyData(data);
 		this.state.container.clearRect(0, 0, this.state.width, this.state.height);
 		var width = this.state.width / len;
+		var coefficient = 255 / len;
+    var gradient = this.state.container.createLinearGradient(0,0, this.state.width, 0);
+    gradient.addColorStop(0, "#DB36A4");
+    gradient.addColorStop(1, "#F7FF00");
 
     for (var i = 0; i < data.length; i++ ) {
-      var magnitude = data[i];
-      this.state.container.fillRect(i*width, this.state.height, 1, -magnitude * .5);
+      var magnitude = data[i] / 128.0;
+      this.state.container.fillStyle = gradient;
+      this.state.container.fillRect(i * width, this.state.height - magnitude * .5 * this.state.height, 1, this.state.height);
     }
-
 	},
 
 	render: function() {
 		return (
-		// make it look pretty, use some canvas sheeeet
-		// <canvas width={this.state.width} height={this.state.height}>
-		// </canvas>
 		<div>
-			<button onClick={this.startLevels}>Click to display levels</button>
-			<canvas width={this.state.width} height={this.state.height}></canvas>
+			<div className="levels">	
+				<canvas width={this.state.width} height={this.state.height}></canvas>
+			</div>
+			<div>
+				<button type="button" onClick={this.startLevels}>Click to display levels</button>
+			</div>
 		</div>
 		)
 	}
