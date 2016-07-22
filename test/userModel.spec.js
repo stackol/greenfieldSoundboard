@@ -7,7 +7,7 @@ var User = require('../server/models/user');
 var Users = require('../server/collections/users');
 
 
-describe('User Route', function() {
+describe('User Model and Collection', function() {
   beforeEach(function(done) {
     User.where({ email: 'test@test.com' }).fetch()
       .then(function(user) {
@@ -37,6 +37,26 @@ describe('User Route', function() {
       .then(function(user) {
         expect(user.get('email')).to.equal('test@test.com');
         done();
+      });
+  });
+
+  it('should verify the correct password', function(done) {
+    User.where({email: 'test@test.com'}).fetch()
+      .then(function(user) {
+        user.comparePassword('defconbravo', function(isMatch) {
+          expect(isMatch).to.equal(true);
+          done();
+        });
+      });
+  });
+
+  it('should reject an incorrect password', function(done) {
+    User.where({email: 'test@test.com'}).fetch()
+      .then(function(user) {
+        user.comparePassword('wrongpassword', function(isMatch) {
+          expect(isMatch).to.equal(false);
+          done();
+        });
       });
   });
 

@@ -7,7 +7,7 @@
     "compile": "babel public/ --out-dir compiled --presets es2015,react",
     "watch": "babel public/ --out-dir compiled --preset es2015,react --watch",
     "start": "node server/server.js",
-    "test": "./node_modules/.bin/mocha",
+    "test": "node server/server.js& ./node_modules/.bin/mocha; pkill -n node;",
     "dev": "webpack -d --watch",
     "build": "webpack -p"
   },
@@ -54,8 +54,9 @@
     "pg": "^6.0.3",
     "react": "^15.2.1",
     "react-dom": "^0.14.7",
-    "request": "^2.72.0",
+    "request": "^2.73.0",
     "sqlite3": "^3.1.4",
+    "supertest": "^1.2.0",
     "webpack": "^1.13.1",
     "webpack-dev-server": "^1.14.1"
   },
