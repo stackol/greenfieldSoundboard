@@ -23,15 +23,15 @@ var App = React.createClass({
   //once the component mounts, we set those states equal to the correct data.  We also hide the binding window using JQuery until it is required.
   componentDidMount: function() {
     $('#bindingWindow').hide();
-    this.serverRequest = $.get(window.location.href + "sounds", function (result) {
+    this.serverRequest = $.get(window.location.href + "default", function (result) {
       this.setState({
         soundList: result,
-        bindings: qwertyMap.map(function(key) {
+        bindings: map.default.board.map(function(key) {
           return key !== 0
-            ? {key: key, path: defaultKeys[key], loop: false, playing: false}
+            ? {key: key, path: map.default.keys[key], loop: false, playing: false}
             : 0;
         }),
-        keyMap: defaultKeys
+        keyMap: map.default.keys
       });
     }.bind(this));
     //OSX and MAC reserve functionality of either the alt or ctrl key, this checks the OS
@@ -48,11 +48,12 @@ var App = React.createClass({
     $.get(window.location.href + instrument, function(result){
       this.setState({
         soundList: result,
-        bindings: pianoMap.map(function(key){
+        bindings: map[instrument].board.map(function(key){
           return key !== 0
-          ? {key: key, path: pianoKeys[key], loop: false, playing: false}
+          ? {key: key, path: map[instrument].keys[key], loop: false, playing: false}
           : 0;
-        })
+        }),
+        keyMap: map[instrument].keys
       })
     }.bind(this));
   },
@@ -66,15 +67,15 @@ var App = React.createClass({
   //this is our keyhandler function.  It handles all keypress events on the DOM.  Plays/stops the appropriate sound file,
   //as well as changing the styling on the appropriate hey.
   handleKeyPress: function(event) {
+    console.log(this.state.record)
     //store all our relevent DOM elements as variables so that we can reference them easily later.
     var key = event.code.toLowerCase()[3],
         keyNumber = key.charCodeAt(),
         $audio = document.getElementById(keyNumber),
         $vKey = $('#' + keyNumber).parent();
 
-    // this.state.record.push([pianoKeys[keyNumber]]);
     var tmp = this.state.record;
-    tmp.push(this.state.keyMap[keyNumber]);
+    tmp.push($audio);
     this.setState({
       record: tmp
     })
