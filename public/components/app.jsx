@@ -138,11 +138,7 @@ var App = React.createClass({
     const userText = this.state.loggedIn ? 'Logout' : 'Login';
     return (
        <div id="appWindow">
-        <div id="signinSignout">
-          <button type="button">
-            {userText}
-          </button>
-        </div>
+        <Login />
          <div id = "bindingWindow">
            <h3>Click on a file to change the binding of {this.state.changeKey.toUpperCase()} to</h3>
              <ul id="binding">
