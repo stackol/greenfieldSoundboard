@@ -44,8 +44,8 @@ var App = React.createClass({
     window.addEventListener('keypress', this.handleKeyPress);
   },
 
-  bindPiano: function(){
-    $.get(window.location.href + "piano", function(result){
+  bindPiano: function(instrument){
+    $.get(window.location.href + instrument, function(result){
       this.setState({
         soundList: result,
         bindings: pianoMap.map(function(key){
