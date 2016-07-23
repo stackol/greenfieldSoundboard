@@ -15,15 +15,14 @@ class Login extends React.Component {
     });
   }
 
-  // loginTest() {
-  //   return this.state.loggedIn ? 'Logout' : 'Login';
-  // }
-
   render() {
     const loggedIn = this.state.loggedIn? 'Logout' : 'Login';
     return (
       <div id="loginComponent">
-        <button type="button" onClick={this._onButtonClick}>{loggedIn}</button>
+        {this.state.showComponent ?
+          null :
+          <button type="button" onClick={this._onButtonClick}>{loggedIn}</button>
+        }
         {this.state.showComponent ?
           <div id="loginForm">
             <p>
