@@ -93,7 +93,7 @@ app.post('/signup', function(req, res) {
 });
 
 //returns an array of all the sounds in foley folder
-app.get('/sounds', function (req, res) {
+app.get('/default', function (req, res) {
   fs.readdir(path.join(__dirname + '/../foley/'), function(err, files) {
   // fs.readdir(path.join(__dirname + '/../piano/'), function(err, files) {
     if (err) console.error(err);
