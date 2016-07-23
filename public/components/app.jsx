@@ -16,6 +16,7 @@ var App = React.createClass({
       soundList: [],
       changeKey: "",
       record: [],
+      loggedIn: false
     }
   ),
   //once the component mounts, we set those states equal to the correct data.  We also hide the binding window using JQuery until it is required.
@@ -134,30 +135,36 @@ var App = React.createClass({
 
 
   render: function() {
-   return (
-     <div id="appWindow">
-       <div id = "bindingWindow">
-         <h3>Click on a file to change the binding of {this.state.changeKey.toUpperCase()} to</h3>
-           <ul id="binding">
-           {
-             this.state.soundList.map( (sound, idx) => ( //es6 again
-               <RebindNode key={idx} targetSong = {sound} targetKey = {this.state.changeKey} bindings = {this.state.bindings} reRender={this.reRender}/>
-             ), this)
-           }
-           </ul>
-       </div>
-       <div id='keyboardWindow' className="keyboard">
-       {
-         this.state.bindings.map( (keyBinding, idx) => //yay es6
-           keyBinding === 0
-            ? <br key={idx}/>
-            : <VKey key={idx} keyId = {keyBinding.key} path={keyBinding.path}/>
-         )
-       }
-       </div>
-       <Levels/>
-       <InstrumentList handleClick={ this.bindPiano } />
-     </div>
+    const userText = this.state.loggedIn ? 'Logout' : 'Login';
+    return (
+       <div id="appWindow">
+        <div id="signinSignout">
+          <button type="button">
+            {userText}
+          </button>
+        </div>
+         <div id = "bindingWindow">
+           <h3>Click on a file to change the binding of {this.state.changeKey.toUpperCase()} to</h3>
+             <ul id="binding">
+             {
+               this.state.soundList.map( (sound, idx) => ( //es6 again
+                 <RebindNode key={idx} targetSong = {sound} targetKey = {this.state.changeKey} bindings = {this.state.bindings} reRender={this.reRender}/>
+               ), this)
+             }
+             </ul>
+         </div>
+         <div id='keyboardWindow' className="keyboard">
+         {
+           this.state.bindings.map( (keyBinding, idx) => //yay es6
+             keyBinding === 0
+              ? <br key={idx}/>
+              : <VKey key={idx} keyId = {keyBinding.key} path={keyBinding.path}/>
+           )
+         }
+         </div>
+         <Levels/>
+         <InstrumentList handleClick={ this.bindPiano } />
+      </div>
    )
  }
 })
