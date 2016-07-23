@@ -74,7 +74,7 @@ var App = React.createClass({
 
     // this.state.record.push([pianoKeys[keyNumber]]);
     var tmp = this.state.record;
-    var tmp.push(this.state.keyMap[keyNumber]);
+    tmp.push(this.state.keyMap[keyNumber]);
     this.setState({
       record: tmp
     })
