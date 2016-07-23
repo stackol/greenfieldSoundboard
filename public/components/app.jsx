@@ -26,7 +26,7 @@ var App = React.createClass({
     this.serverRequest = $.get(window.location.href + "default", function (result) {
       this.setState({
         soundList: result,
-        bindings: map.default.board.map(function(key) {
+        bindings: map.default.bindings.map(function(key) {
           return key !== 0
             ? {key: key, path: map.default.keys[key], loop: false, playing: false}
             : 0;
@@ -44,11 +44,11 @@ var App = React.createClass({
     window.addEventListener('keypress', this.handleKeyPress);
   },
 
-  bindPiano: function(instrument){
+  bindTo: function(instrument){
     $.get(window.location.href + instrument, function(result){
       this.setState({
         soundList: result,
-        bindings: map[instrument].board.map(function(key){
+        bindings: map[instrument].bindings.map(function(key){
           return key !== 0
           ? {key: key, path: map[instrument].keys[key], loop: false, playing: false}
           : 0;
@@ -67,7 +67,6 @@ var App = React.createClass({
   //this is our keyhandler function.  It handles all keypress events on the DOM.  Plays/stops the appropriate sound file,
   //as well as changing the styling on the appropriate hey.
   handleKeyPress: function(event) {
-    console.log(this.state.record)
     //store all our relevent DOM elements as variables so that we can reference them easily later.
     var key = event.code.toLowerCase()[3],
         keyNumber = key.charCodeAt(),
@@ -162,13 +161,13 @@ var App = React.createClass({
            }
            </ul>
        </div>
-       <InstrumentList handleClick={ this.bindPiano } />
+       <InstrumentList handleClick={ this.bindTo } />
        <div id='keyboardWindow' className="keyboard">
        {
          this.state.bindings.map( (keyBinding, idx) => //yay es6
            keyBinding === 0
             ? <br key={idx}/>
-            : <VKey key={idx} keyId = {keyBinding.key} path={keyBinding.path}/>
+            : <VKey key={idx} keyId={keyBinding.key} path={keyBinding.path}/>
          )
        }
        </div>
