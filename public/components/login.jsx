@@ -56,11 +56,8 @@ class Login extends React.Component {
   // }
 
   render() {
-    console.log(this.props.loggedIn);
     const loggedIn = this.props.loggedIn ? 'Logout' : 'Login';
-    console.log("logged in?", loggedIn);
     const sideModals = this.props.sideModals;
-    console.log("sideModals", sideModals);
     return (
       <div id="loginComponent">
         { sideModals.indexOf('login') !== -1 ?
