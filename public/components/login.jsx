@@ -6,10 +6,11 @@ class Login extends React.Component {
     this.state = {
       showComponent: false
     };
-    this._onButtonClick = this._onButtonClick.bind(this);
+    this._onLoginButtonClick = this._onLoginButtonClick.bind(this);
+    this.attemptLogin = this.attemptLogin.bind(this);
   }
 
-  _onButtonClick() {
+  _onLoginButtonClick() {
     this.setState({
       showComponent: true,
     });
@@ -24,6 +25,7 @@ class Login extends React.Component {
   }
 
   attemptLogin() {
+    var that = this;
     console.log("email", this.state.email);
     console.log("password", this.state.password);
     $.ajax({
@@ -36,8 +38,11 @@ class Login extends React.Component {
         password: this.state.password
       }),
       success: function(){
-        console.log("device control succeeded");
-        console.log("woohoooo");
+        console.log('sucesss');
+        that.setState({
+          showComponent: false,
+          loggedIn: true
+        });
       },
       error: function(err){
         console.log("Error!!", err);
@@ -52,7 +57,7 @@ class Login extends React.Component {
       <div id="loginComponent">
         {this.state.showComponent ?
           null :
-          <button type="button" onClick={this._onButtonClick}>{loggedIn}</button>
+          <button type="button" onClick={this._onLoginButtonClick}>{loggedIn}</button>
         }
         {this.state.showComponent ?
           <div id="loginForm">
@@ -63,7 +68,7 @@ class Login extends React.Component {
               <input type="password" value={this.state.password} placeholder="Password" onChange={this.handlePasswordChange.bind(this)} />
             </p>
             <p class="submit">
-              <input type="submit" value="Login" onClick={this.attemptLogin.bind(this)} />
+              <input type="submit" value="Login" onClick={this.attemptLogin} />
             </p>
           </div> :
           null
