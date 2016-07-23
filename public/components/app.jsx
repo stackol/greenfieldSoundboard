@@ -76,6 +76,7 @@ var App = React.createClass({
 
     var tmp = this.state.record;
     tmp.push($audio);
+    tmp.push(this.state.keyMap[keyNumber]);
     this.setState({
       record: tmp
     })
