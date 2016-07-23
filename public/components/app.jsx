@@ -14,7 +14,9 @@ var App = React.createClass({
      {
       bindings: [],
       soundList: [],
-      changeKey: ""
+      changeKey: "",
+      record: [],
+      loggedIn: false
     }
   ),
   //once the component mounts, we set those states equal to the correct data.  We also hide the binding window using JQuery until it is required.
@@ -25,7 +27,7 @@ var App = React.createClass({
         soundList: result,
         bindings: qwertyMap.map(function(key) {
           return key !== 0
-            ? {key: key, path: defaultData[key], loop: false, playing: false}
+            ? {key: key, path: defaultKeys[key], loop: false, playing: false}
             : 0;
         })
       });
@@ -38,6 +40,19 @@ var App = React.createClass({
 
       //one event listener for all keypresses.
     window.addEventListener('keypress', this.handleKeyPress);
+  },
+
+  bindPiano: function(){
+    $.get(window.location.href + "piano", function(result){
+      this.setState({
+        soundList: result,
+        bindings: pianoMap.map(function(key){
+          return key !== 0
+          ? {key: key, path: pianoKeys[key], loop: false, playing: false}
+          : 0;
+        })
+      })
+    }.bind(this));
   },
 
 //I'm not sure why this is important but online resources say put it in and it doesn't break anything.
@@ -54,6 +69,8 @@ var App = React.createClass({
         keyNumber = key.charCodeAt(),
         $audio = document.getElementById(keyNumber),
         $vKey = $('#' + keyNumber).parent();
+
+    // this.state.record.push([pianoKeys[keyNumber]]);
 
     // handles the ctrl+key menu drop.
     // originally checked boolean value [ event.ctrlKey ] to check to see if ctrl was
@@ -79,8 +96,7 @@ var App = React.createClass({
 
     if ($audio.paused) {
       $audio.play()
-    }
-    else {
+    } else {
       $audio.pause()
       $vKey.removeClass('green red pressed');
     }
@@ -119,31 +135,37 @@ var App = React.createClass({
 
 
   render: function() {
-   return (
-     <div id="appWindow">
-       <div id = "bindingWindow">
-         <h3>Click on a file to change the binding of {this.state.changeKey.toUpperCase()} to</h3>
-           <ul id="binding">
-           {
-             this.state.soundList.map( (sound, idx) => ( //es6 again
-               <RebindNode key={idx} targetSong = {sound} targetKey = {this.state.changeKey} bindings = {this.state.bindings} reRender={this.reRender}/>
-             ), this)
-           }
-           </ul>
-       </div>
-       <div id='keyboardWindow' className="keyboard">
-       {
-         this.state.bindings.map( (keyBinding, idx) => //yay es6
-           keyBinding === 0
-            ? <br key={idx}/>
-            : <VKey key={idx} keyId = {keyBinding.key} path={keyBinding.path}/>
-         )
-       }
-       </div>
-     </div>
+    const userText = this.state.loggedIn ? 'Logout' : 'Login';
+    return (
+       <div id="appWindow">
+        <Login />
+         <div id = "bindingWindow">
+           <h3>Click on a file to change the binding of {this.state.changeKey.toUpperCase()} to</h3>
+             <ul id="binding">
+             {
+               this.state.soundList.map( (sound, idx) => ( //es6 again
+                 <RebindNode key={idx} targetSong = {sound} targetKey = {this.state.changeKey} bindings = {this.state.bindings} reRender={this.reRender}/>
+               ), this)
+             }
+             </ul>
+         </div>
+         <div id='keyboardWindow' className="keyboard">
+         {
+           this.state.bindings.map( (keyBinding, idx) => //yay es6
+             keyBinding === 0
+              ? <br key={idx}/>
+              : <VKey key={idx} keyId = {keyBinding.key} path={keyBinding.path}/>
+           )
+         }
+         </div>
+         <Levels/>
+         <InstrumentList handleClick={ this.bindPiano } />
+      </div>
    )
  }
 })
+
+
 
 //This simulates a loading page. In all of our tests the server loaded the sound
 //files instantly but by the time we noticed this we already had an awesome
