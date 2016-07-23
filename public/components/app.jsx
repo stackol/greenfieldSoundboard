@@ -16,7 +16,8 @@ var App = React.createClass({
       soundList: [],
       changeKey: "",
       record: [],
-      loggedIn: false
+      loggedIn: false,
+      keyMap: {}
     }
   ),
   //once the component mounts, we set those states equal to the correct data.  We also hide the binding window using JQuery until it is required.
@@ -29,7 +30,8 @@ var App = React.createClass({
           return key !== 0
             ? {key: key, path: defaultKeys[key], loop: false, playing: false}
             : 0;
-        })
+        }),
+        keyMap: defaultKeys
       });
     }.bind(this));
     //OSX and MAC reserve functionality of either the alt or ctrl key, this checks the OS
@@ -71,6 +73,11 @@ var App = React.createClass({
         $vKey = $('#' + keyNumber).parent();
 
     // this.state.record.push([pianoKeys[keyNumber]]);
+    var tmp = this.state.record;
+    var tmp.push(this.state.keyMap[keyNumber]);
+    this.setState({
+      record: tmp
+    })
 
     // handles the ctrl+key menu drop.
     // originally checked boolean value [ event.ctrlKey ] to check to see if ctrl was
@@ -135,32 +142,32 @@ var App = React.createClass({
 
 
   render: function() {
-    const userText = this.state.loggedIn ? 'Logout' : 'Login';
-    return (
-       <div id="appWindow">
-        <Login />
-         <div id = "bindingWindow">
-           <h3>Click on a file to change the binding of {this.state.changeKey.toUpperCase()} to</h3>
-             <ul id="binding">
-             {
-               this.state.soundList.map( (sound, idx) => ( //es6 again
-                 <RebindNode key={idx} targetSong = {sound} targetKey = {this.state.changeKey} bindings = {this.state.bindings} reRender={this.reRender}/>
-               ), this)
-             }
-             </ul>
-         </div>
-         <div id='keyboardWindow' className="keyboard">
-         {
-           this.state.bindings.map( (keyBinding, idx) => //yay es6
-             keyBinding === 0
-              ? <br key={idx}/>
-              : <VKey key={idx} keyId = {keyBinding.key} path={keyBinding.path}/>
-           )
-         }
-         </div>
-         <Levels/>
-         <InstrumentList handleClick={ this.bindPiano } />
-      </div>
+  const userText = this.state.loggedIn ? 'Logout' : 'Login';
+   return (
+     <div id="appWindow">
+      <Login />
+       <div id = "bindingWindow">
+         <h3>Click on a file to change the binding of {this.state.changeKey.toUpperCase()} to</h3>
+           <ul id="binding">
+           {
+             this.state.soundList.map( (sound, idx) => ( //es6 again
+               <RebindNode key={idx} targetSong = {sound} targetKey = {this.state.changeKey} bindings = {this.state.bindings} reRender={this.reRender}/>
+             ), this)
+           }
+           </ul>
+       </div>
+       <InstrumentList handleClick={ this.bindPiano } />
+       <div id='keyboardWindow' className="keyboard">
+       {
+         this.state.bindings.map( (keyBinding, idx) => //yay es6
+           keyBinding === 0
+            ? <br key={idx}/>
+            : <VKey key={idx} keyId = {keyBinding.key} path={keyBinding.path}/>
+         )
+       }
+       </div>
+       <Levels/>
+     </div>
    )
  }
 })
