@@ -108,6 +108,13 @@ app.get('/piano', function (req, res) {
   });
 });
 
+app.get('/presets', function(req, res) {
+  var presets = [['Null Filter', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  ['Bass Reducer', -25, -25, -25, 0, 0, 0, 0, 0, 0, 0],
+  ['Bass Booster', 25, 25, 25, 0, 0, 0, 0, 0, 0, 0]];
+  res.send(presets);
+})
+
 app.get('/defaults', function (req, res) {
   // var defaults = {
   //   97: "/piano/c.wav",
