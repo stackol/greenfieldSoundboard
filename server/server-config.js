@@ -2,7 +2,29 @@ var express = require('express');
 var fs = require('fs');
 var path = require('path');
 
+var passport = require('passport');
+var flash    = require('connect-flash');
+
+var morgan       = require('morgan');
+var cookieParser = require('cookie-parser');
+var bodyParser   = require('body-parser');
+var session      = require('express-session');
+
 var app = express();
+
+var User = require('./models/user');
+
+
+// for development
+app.use(morgan('dev'));
+app.use(cookieParser()); // to read cookies
+app.use(bodyParser()); // read forms
+
+// passport stuff
+app.use(session({ secret: 'bourbonistasty' }));
+app.use(passport.initialize());
+app.use(passport.session()); // persistence
+app.use(flash()); // display flash messages
 
 // set a normalized path to public.
 var rootPath = path.normalize(__dirname + '/../public');
@@ -11,6 +33,8 @@ var rootPath = path.normalize(__dirname + '/../public');
 // note that the script tags in index.html are simplified as a result.
 app.use('/dist', express.static(__dirname + '/../dist/'));
 app.use('/soundfiles', express.static(__dirname + '/../foley/'));
+// TODO: create instruments dir
+app.use('/piano', express.static(__dirname + '/../piano/'));
 app.use('/node_modules', express.static(__dirname + '/../node_modules/'));
 app.use('/compiled', express.static(__dirname + '/../compiled/'));
 app.use('/styles', express.static(__dirname + '/../public/components/styles/'));
@@ -21,15 +45,84 @@ app.get('/', function(req, res) {
   res.sendFile(path.join(rootPath + '/index.html'));
 });
 
+// post for '/login'. if successful adds a user object to session
+app.post('/login', function(req, res) {
+  var userEmail    = req.body.email;
+  var userPassword = req.body.password;
+
+  // fetch username by email, check password
+  new User({email: userEmail}).fetch()
+    .then(function(user) {
+      if (!user) {
+        // send response with flash, username doesn't exist
+        res.send(401, "username doesn't exist!");
+      } else {
+        //check password
+        user.comparePassword(userPassword, function(matches) {
+          if (matches) {
+            // log in
+            // front-end: replace login button with logout button
+            req.session.user = user.get('id');
+            res.send(200);
+          } else {
+            //send response with flash, wrong password
+            res.send(401, "wrong password!");
+          }
+        });
+      }
+    });
+});
+
+// post for '/signup', if successful adds user to db
+app.post('/signup', function(req, res) {
+  var userEmail    = req.body.email;
+  var userPassword = req.body.password;
+
+  new User({email: userEmail}).fetch()
+    .then(function(user) {
+      if (!user) {
+        // username available, add user!
+        // add user to session
+        new User({email: userEmail, password: userPassword}).save();
+        req.session.user = new User({email: userEmail}).fetch().get('id');
+        res.send(200);
+      } else {
+        res.send(401, "username taken!");
+      }
+    });
+});
+
 //returns an array of all the sounds in foley folder
 app.get('/sounds', function (req, res) {
   fs.readdir(path.join(__dirname + '/../foley/'), function(err, files) {
+  // fs.readdir(path.join(__dirname + '/../piano/'), function(err, files) {
+    if (err) console.error(err);
+    res.send(files);
+  });
+});
+
+app.get('/piano', function (req, res) {
+  fs.readdir(path.join(__dirname + '/../piano/'), function(err, files) {
     if (err) console.error(err);
     res.send(files);
   });
 });
 
 app.get('/defaults', function (req, res) {
+  // var defaults = {
+  //   97: "/piano/c.wav",
+  //   119: "/piano/cH.wav",
+  //   115: "/piano/d.wav",
+  //   101: "/piano/eb.wav",
+  //   100: "/piano/e.wav",
+  //   102: "/piano/f.wav",
+  //   116: "/piano/fH.wav",
+  //   103: "/piano/g.wav",
+  //   121: "/piano/gH.wav",
+  //   104: "/piano/a.wav",
+  //   117: "/piano/bb.wav",
+  //   106: "/piano/b.wav",
+  // }
   var defaults = {
     97: "/soundfiles/deep-techno-groove.wav",
     98: "/soundfiles/bam-bam-bolam.wav",
