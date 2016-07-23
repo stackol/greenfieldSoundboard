@@ -17,7 +17,7 @@ var Levels = React.createClass({
 
 	startLevels: function() {
 		if (!this.state.initialized) {
-			this.serverRequest = $.get(window.location.href + "presets", function(result) {
+			$.get(window.location.href + "presets", function(result) {
 				this.setState({
 					audioElms: $('audio'),
 					container: $('canvas')[0].getContext('2d'),
@@ -43,7 +43,9 @@ var Levels = React.createClass({
 		}
 
 		for (var i = 0; i < this.state.audioElms.length; i++) {
-			this.state.ac.createMediaElementSource(this.state.audioElms[i]).connect(merge);
+			var temp = this.state.ac.createMediaElementSource(this.state.audioElms[i]);
+			temp.connect(merge, 0, 0);
+			temp.connect(merge, 0, 1);
 		}
 
 		this.setState({filters: tempArray}, function() {
