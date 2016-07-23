@@ -3,6 +3,7 @@
 class Login extends React.Component {
   constructor(props) {
     super(props);
+    console.log(props);
     this.state = {
       showComponent: false
     };
@@ -50,6 +51,13 @@ class Login extends React.Component {
       }
     });
   }
+
+  // logout() {
+  //   $.ajax({
+  //     type: "POST",
+  //     url: "/logout"
+  //   });
+  // }
 
   render() {
     const loggedIn = this.state.loggedIn? 'Logout' : 'Login';
