@@ -24,6 +24,17 @@ db.schema.hasTable('users').then(function(exists) {
     });
   }
 });
-
+db.schema.hasTable('songs').then(function(exists) {
+  if (!exists) {
+    db.schema.createTable('songs', function (song) {
+      song.increments('id').primary();
+      song.varchar('record');
+      song.varchar('title');
+      song.timestamps();
+    }).then(function () {
+      console.log('Created songs table');
+    });
+  }
+});
 var Bookshelf = require('bookshelf')(db);
 module.exports = Bookshelf;
