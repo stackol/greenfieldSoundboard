@@ -44,8 +44,8 @@ var App = React.createClass({
     window.addEventListener('keypress', this.handleKeyPress);
   },
 
-  bindPiano: function(){
-    $.get(window.location.href + "piano", function(result){
+  bindPiano: function(instrument){
+    $.get(window.location.href + instrument, function(result){
       this.setState({
         soundList: result,
         bindings: pianoMap.map(function(key){
@@ -74,7 +74,7 @@ var App = React.createClass({
 
     // this.state.record.push([pianoKeys[keyNumber]]);
     var tmp = this.state.record;
-    var tmp.push(this.state.keyMap[keyNumber]);
+    tmp.push(this.state.keyMap[keyNumber]);
     this.setState({
       record: tmp
     })
