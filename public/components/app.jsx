@@ -86,6 +86,13 @@ var App = React.createClass({
     });
   },
 
+  addSearchComponent: function() {
+    var newSideModals = this.state.sideModals.concat(['searchComponent']);
+    this.setState({
+      sideModals: newSideModals
+    });
+  },
+
   //this is our keyhandler function.  It handles all keypress events on the DOM.  Plays/stops the appropriate sound file,
   //as well as changing the styling on the appropriate hey.
   handleKeyPress: function(event) {
@@ -187,6 +194,9 @@ var App = React.createClass({
              ), this)
            }
            </ul>
+           <h3> Or search for a sound here: </h3>
+           <input onClick={this.addSearchComponent}></input>
+           <button>Search</button>
        </div>
        <InstrumentList handleClick={ this.bindTo } />
        <div id='keyboardWindow' className="keyboard">
