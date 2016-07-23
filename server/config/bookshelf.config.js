@@ -30,6 +30,7 @@ db.schema.hasTable('songs').then(function(exists) {
       song.increments('id').primary();
       song.varchar('record');
       song.varchar('title');
+      song.timestamps();
     }).then(function () {
       console.log('Created songs table');
     });

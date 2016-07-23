@@ -1,34 +1,36 @@
-
-
-class Library extends React.Component({
+//import React, { Component, PropTypes } from 'react'
+class Library extends React.Component{
    constructor(props) {
-    super(props);
-    this.state = {
-      width: 800,
-      height: 300,
-    };
-    this._onButtonClick = this._onButtonClick.bind(this);
-  }
+    super(props)
+ 
+   // this._onButtonClick = this._onButtonClick.bind(this);
+    console.log('record',this.record, this.clearRecord)
+   }
   
 
-  clearSong: function() {
+  clearSong() {
+     this.clearRecord()
+  }
+
+  playSong() {
+    for (var i=0;i<this.record.length;i++){
+      this.record[i].play()
+    }
+  }
+
+  saveSong() {
      
-  }, 
+  }
 
-  playSong: function() {
-  },
-
-  saveSong: function() {
-
-  },
-
-  render: function() {
+  render() {
     return (
     <div>
-      <div className="library", id='library'>  
-        <div width={this.state.width} height={this.state.height}></div>
+      <div className="library">  
+      <h2>Library</h2>
+        <div width='800' height='300'>
+        <textarea width='800' height='300' id='library' value={this.record} />
+        </div>
       </div>
-      <textarea id='title' val='Title'/>
       <div>
         <button type="button" onClick={this.clearSong}>Clear Song</button>
         <button type="button" onClick={this.saveSong}>Save Song</button>
@@ -37,6 +39,5 @@ class Library extends React.Component({
     </div>
     )
   }
-})
-
-window.Levels = Levels;
+}
+window.Library = Library;

@@ -140,7 +140,11 @@ var App = React.createClass({
       </div>, document.getElementById('app')
     );
   },
-
+  clearRecord: function(){
+    this.setState({
+      record : []
+    })
+  },
 
   render: function() {
   const userText = this.state.loggedIn ? 'Logout' : 'Login';
@@ -168,6 +172,7 @@ var App = React.createClass({
        }
        </div>
        <Levels/>
+       <Library record={this.state.record} clearRecord={this.state.clearRecord}/>
      </div>
    )
  }
