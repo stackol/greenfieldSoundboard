@@ -17,6 +17,7 @@ var App = React.createClass({
       changeKey: "",
       record: [],
       loggedIn: false,
+      sideModals: [],
       keyMap: {}
     }
   ),
@@ -41,7 +42,13 @@ var App = React.createClass({
       : this.setState({bindTrigger: "ctrlKey"});
 
       //one event listener for all keypresses.
-    window.addEventListener('keypress', this.handleKeyPress);
+    var that = this;
+    window.addEventListener('keypress', function(event) {
+      // var that = this;
+      if (that.state.sideModals.length === 0) {
+        that.handleKeyPress(event);
+      }
+    });
   },
 
   bindTo: function(instrument){
@@ -63,6 +70,21 @@ var App = React.createClass({
     this.serverRequest.abort();
   },
 
+  _onLoginButtonClick: function() {
+    var newSideModals = this.state.sideModals.concat(['login']);
+    this.setState({
+      sideModals: newSideModals,
+    });
+  },
+
+  loginSuccess: function() {
+    var newSideModals = this.state.sideModals;
+    newSideModals.pop();
+    this.setState({
+      sideModals: newSideModals,
+      loggedIn: true
+    });
+  },
 
   //this is our keyhandler function.  It handles all keypress events on the DOM.  Plays/stops the appropriate sound file,
   //as well as changing the styling on the appropriate hey.
@@ -150,7 +172,12 @@ var App = React.createClass({
   const userText = this.state.loggedIn ? 'Logout' : 'Login';
    return (
      <div id="appWindow">
-      <Login />
+      <Login
+        _onLoginButtonClick={this._onLoginButtonClick}
+        loginSuccess={this.loginSuccess}
+        sideModals={this.state.sideModals}
+        loggedIn={this.state.loggedIn}
+      />
        <div id = "bindingWindow">
          <h3>Click on a file to change the binding of {this.state.changeKey.toUpperCase()} to</h3>
            <ul id="binding">
