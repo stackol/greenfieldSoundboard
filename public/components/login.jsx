@@ -3,16 +3,13 @@
 class Login extends React.Component {
   constructor(props) {
     super(props);
+    // console.log(this.props);
+    // console.log(this.state);
     this.state = {
-      showComponent: false
+      // showComponent: false
     };
-    this._onButtonClick = this._onButtonClick.bind(this);
-  }
-
-  _onButtonClick() {
-    this.setState({
-      showComponent: true,
-    });
+    // this._onLoginButtonClick = this._onLoginButtonClick.bind(this);
+    this.attemptLogin = this.attemptLogin.bind(this);
   }
 
   handleEmailChange(event) {
@@ -24,6 +21,7 @@ class Login extends React.Component {
   }
 
   attemptLogin() {
+    var that = this;
     console.log("email", this.state.email);
     console.log("password", this.state.password);
     $.ajax({
@@ -36,8 +34,12 @@ class Login extends React.Component {
         password: this.state.password
       }),
       success: function(){
-        console.log("device control succeeded");
-        console.log("woohoooo");
+        console.log('sucesss');
+        // that.setState({
+        //   showComponent: false,
+        //   loggedIn: true
+        // });
+        that.props.loginSuccess();
       },
       error: function(err){
         console.log("Error!!", err);
@@ -46,15 +48,26 @@ class Login extends React.Component {
     });
   }
 
+  // logout() {
+  //   $.ajax({
+  //     type: "POST",
+  //     url: "/logout"
+  //   });
+  // }
+
   render() {
-    const loggedIn = this.state.loggedIn? 'Logout' : 'Login';
+    console.log(this.props.loggedIn);
+    const loggedIn = this.props.loggedIn ? 'Logout' : 'Login';
+    console.log("logged in?", loggedIn);
+    const sideModals = this.props.sideModals;
+    console.log("sideModals", sideModals);
     return (
       <div id="loginComponent">
-        {this.state.showComponent ?
+        { sideModals.indexOf('login') !== -1 ?
           null :
-          <button type="button" onClick={this._onButtonClick}>{loggedIn}</button>
+          <button type="button" onClick={this.props._onLoginButtonClick}>{loggedIn}</button>
         }
-        {this.state.showComponent ?
+        { sideModals.indexOf('login') !== -1 ?
           <div id="loginForm">
             <p>
               <input type="text" value={this.state.email} placeholder="Email" onChange={this.handleEmailChange.bind(this)} />
@@ -63,7 +76,7 @@ class Login extends React.Component {
               <input type="password" value={this.state.password} placeholder="Password" onChange={this.handlePasswordChange.bind(this)} />
             </p>
             <p class="submit">
-              <input type="submit" value="Login" onClick={this.attemptLogin.bind(this)} />
+              <input type="submit" value="Login" onClick={this.attemptLogin} />
             </p>
           </div> :
           null
