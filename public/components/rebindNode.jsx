@@ -3,8 +3,8 @@ var RebindNode = React.createClass({
   //this is the function that actually changes the binding of the key.
   updateKeyBinding: function(event) {
     var code = this.props.targetKey.charCodeAt();
-    // var path = "/soundfiles/" + this.props.targetSong;
-    var path = "/piano/" + this.props.targetSong;
+    var path = "/soundfiles/" + this.props.targetSong;
+    // var path = "/piano/" + this.props.targetSong;
 
     this.props.bindings.forEach(function (ele, idx) {
       if (ele.key === code) {
@@ -14,8 +14,8 @@ var RebindNode = React.createClass({
   },
   //method for previewing sound before binding it.
   playSample: function() {
-    // var soundExample = window.location.href + "soundFiles/" + this.props.targetSong;
-    var soundExample = window.location.href + "piano/" + this.props.targetSong;
+    var soundExample = window.location.href + "soundFiles/" + this.props.targetSong;
+    // var soundExample = window.location.href + "piano/" + this.props.targetSong;
     var $soundNode = document.getElementById('secretSound');
 
     $soundNode.pause();
