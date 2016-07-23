@@ -115,6 +115,21 @@ app.get('/presets', function(req, res) {
   res.send(presets);
 })
 
+app.post('/saveSong', function(req,res){
+  var record = req.body.record;
+  var title = req.body.title;
+  new Song({record: record, title:title}).save();
+  res.send(200);
+});
+
+app.get('/getSonglibrary', function(req,res){
+  new Song.fetchAll().then(function(data){
+    res.send(data)
+  }).catch(function(err){
+    console.error(err);
+  })
+});
+
 app.get('/defaults', function (req, res) {
   // var defaults = {
   //   97: "/piano/c.wav",
