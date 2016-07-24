@@ -13,6 +13,7 @@ var session      = require('express-session');
 var app = express();
 
 var User = require('./models/user');
+var Song = require('./models/song');
 
 
 // for development

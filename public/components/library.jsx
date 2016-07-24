@@ -30,8 +30,10 @@ class Library extends React.Component{
 
   clearSong() {
     console.log('clearsong')
-    this.state.record = []
-    this.state.recordNames=[]
+    this.setState({
+      record : [],
+      recordNames:[]
+    })
   }
 
   playSong() {
@@ -42,9 +44,9 @@ class Library extends React.Component{
   }
 
   saveSong() {
-    console.log('savesong')
-    var title = this.state.title
-    var recording = this.props.recording
+    var title = this.state.title.toString()
+    var recording = this.props.recording.toString()
+    console.log('savesong',recording)
      $.ajax({
       type: "POST",
       url: "/saveSong",
@@ -64,10 +66,6 @@ class Library extends React.Component{
   }
  
 shouldComponentUpdate(nextProps, nextState) {
-  console.log('names',this.props.recordNames)
-  
-   //var a = this.props.recordNames.lastIndexOf('/')
-  // this.props.recordNames.slice(this.props.recordNames.lastIndexOf('/'))
   return this.props.recordNames !== nextProps.recordNames;
  }
 
@@ -77,7 +75,7 @@ shouldComponentUpdate(nextProps, nextState) {
       <h2 style={{color:'white'}}>Record</h2>     
         <div className='library' id='library'>{ this.props.recordNames}</div>
       <div>
-         <button type="button" onClick={this.playSong.bind(this)}>Play Song</button>
+         <button type="button" onClick={this.playSong.bind(this)}>Play Song</button><button type="button" onClick={this.saveSong.bind(this)}>Save Song</button>
        </div>
     </div>
     )

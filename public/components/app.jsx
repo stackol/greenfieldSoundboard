@@ -219,8 +219,7 @@ var App = React.createClass({
          )
        }
        </div>
-       <Levels/>
-       
+       <Levels/> 
        <Library recording={this.state.record} recordNames={this.state.recordTitles.toString()}clearRecord={this.state.clearRecord}/>
         
      </div>
