@@ -23,6 +23,7 @@ var App = React.createClass({
       keyMap: {},
       recordTitles:[]
     }
+
   ),
   //once the component mounts, we set those states equal to the correct data.  We also hide the binding window using JQuery until it is required.
   componentDidMount: function() {
@@ -177,9 +178,11 @@ var App = React.createClass({
       </div>, document.getElementById('app')
     );
   },
+
   clearRecord: function(){
     this.setState({
-      record : []
+      record : [],
+      recordTitles:[]
     })
   },
 

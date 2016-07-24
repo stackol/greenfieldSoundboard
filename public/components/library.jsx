@@ -3,7 +3,9 @@ class Library extends React.Component{
    constructor(props) {
     super(props)
     this.state = {
-      record:props.recordNames,
+      recordNames:props.recordNames,
+      record:props.recording,
+      clearSong:props.clearRecord,
       library:[],
       title:""
     }
@@ -27,24 +29,30 @@ class Library extends React.Component{
   }
 
   clearSong() {
-     //this.clearRecord()
+    console.log('clearsong')
+    this.state.record = []
+    this.state.recordNames=[]
   }
 
   playSong() {
+    console.log('playsong')
     for (var i=0;i<this.props.recording.length;i++){
       this.props.recording[i].play()
     }
   }
 
   saveSong() {
+    console.log('savesong')
+    var title = this.state.title
+    var recording = this.props.recording
      $.ajax({
       type: "POST",
       url: "/saveSong",
       processData: false,
       contentType: "application/json",
       data: JSON.stringify({
-        title:  this.state.title,
-        record: this.props.recording
+        title:  title,
+        record: recording
       }),
       success: function(){
         console.log("success");
@@ -54,7 +62,6 @@ class Library extends React.Component{
       }
     });
   }
-  ///soundfiles/beads.wav,
  
 shouldComponentUpdate(nextProps, nextState) {
   console.log('names',this.props.recordNames)
@@ -70,6 +77,7 @@ shouldComponentUpdate(nextProps, nextState) {
       <h2 style={{color:'white'}}>Record</h2>     
         <div className='library' id='library'>{ this.props.recordNames}</div>
       <div>
+         <button type="button" onClick={this.playSong.bind(this)}>Play Song</button>
        </div>
     </div>
     )
