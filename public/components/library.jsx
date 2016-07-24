@@ -3,7 +3,7 @@ class Library extends React.Component{
    constructor(props) {
     super(props)
     this.state = {
-      record:props.recording,
+      record:props.recordNames,
       library:[],
       title:""
     }
@@ -54,20 +54,23 @@ class Library extends React.Component{
       }
     });
   }
+  ///soundfiles/beads.wav,
+ 
 shouldComponentUpdate(nextProps, nextState) {
-  return this.props.recording !== nextProps.recording;
+  console.log('names',this.props.recordNames)
+  
+   //var a = this.props.recordNames.lastIndexOf('/')
+  // this.props.recordNames.slice(this.props.recordNames.lastIndexOf('/'))
+  return this.props.recordNames !== nextProps.recordNames;
  }
 
   render() {
-    return (
+     return (
     <div>    
-      <h2 style={{color:'white'}}>Library</h2>     
-        <div className='library' id='library'>{this.props.recording.toString()}</div>
+      <h2 style={{color:'white'}}>Record</h2>     
+        <div className='library' id='library'>{ this.props.recordNames}</div>
       <div>
-        <button type="button" onClick={this.clearSong}>Clear Song</button>
-        <button type="button" onClick={this.saveSong}>Save Song</button>
-        <button type="button" onClick={this.playSong}>Play Song</button>
-      </div>
+       </div>
     </div>
     )
   }

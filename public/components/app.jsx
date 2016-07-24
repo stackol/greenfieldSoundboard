@@ -20,7 +20,8 @@ var App = React.createClass({
       record: [],
       loggedIn: false,
       sideModals: [],
-      keyMap: {}
+      keyMap: {},
+      recordTitles:[]
     }
   ),
   //once the component mounts, we set those states equal to the correct data.  We also hide the binding window using JQuery until it is required.
@@ -103,11 +104,15 @@ var App = React.createClass({
         keyNumber = key.charCodeAt(),
         $audio = document.getElementById(keyNumber),
         $vKey = $('#' + keyNumber).parent();
-
+    var tmp1 = this.state.recordTitles;
     var tmp = this.state.record;
     tmp.push($audio);
-    tmp.push(this.state.keyMap[keyNumber]);
+    var tmpstr = this.state.keyMap[keyNumber].toString()
+    var a = this.state.keyMap[keyNumber].lastIndexOf('/')
+    tmpstr=this.state.keyMap[keyNumber].slice(a+1,-4)
+    tmp1.push(" " + tmpstr)
     this.setState({
+      recordTitles:tmp1,
       record: tmp
     })
 
@@ -213,7 +218,7 @@ var App = React.createClass({
        </div>
        <Levels/>
        
-       <Library recording={this.state.record.toString()} clearRecord={this.state.clearRecord}/>
+       <Library recording={this.state.record} recordNames={this.state.recordTitles.toString()}clearRecord={this.state.clearRecord}/>
         
      </div>
    )
@@ -234,16 +239,5 @@ setTimeout(function() {
 
 }, 2000);
 
-
-// export default connect(
-//  (props)=>{
-//    return {
-//      record: props.record.all,
-//    }
-//  },
-//  {
-//    null
-//  }
-// )(App)
 
 window.App = App;
