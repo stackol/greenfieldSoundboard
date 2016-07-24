@@ -11,6 +11,10 @@ var db = require('knex')({
     filename: path.join(__dirname, '../db/sb.sqlite')
   }
 });
+// var db = require('knex')({
+//   client: 'postgresql',
+//   connection: process.env.DATABASE_URL
+// });
 
 db.schema.hasTable('users').then(function(exists) {
   if (!exists) {

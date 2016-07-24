@@ -1,3 +1,4 @@
+
 //sample input:
 //This example would bind the 'a' key to the "example.wav" file.
 //{
@@ -10,6 +11,7 @@
 // App React class.  Contains a number of methods which control the audio, as well as rendering pretty much the whole damn app.
 var App = React.createClass({
   //declaring some states.
+  
   getInitialState: () => (
      {
       bindings: [],
@@ -108,6 +110,7 @@ var App = React.createClass({
     this.setState({
       record: tmp
     })
+
 
     // handles the ctrl+key menu drop.
     // originally checked boolean value [ event.ctrlKey ] to check to see if ctrl was
@@ -209,7 +212,9 @@ var App = React.createClass({
        }
        </div>
        <Levels/>
-       <Library record={this.state.record} clearRecord={this.state.clearRecord}/>
+       
+       <Library recording={this.state.record.toString()} clearRecord={this.state.clearRecord}/>
+        
      </div>
    )
  }
@@ -228,3 +233,17 @@ setTimeout(function() {
   );
 
 }, 2000);
+
+
+// export default connect(
+//  (props)=>{
+//    return {
+//      record: props.record.all,
+//    }
+//  },
+//  {
+//    null
+//  }
+// )(App)
+
+window.App = App;
