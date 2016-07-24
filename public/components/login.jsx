@@ -22,8 +22,6 @@ class Login extends React.Component {
 
   attemptLogin() {
     var that = this;
-    console.log("email", this.state.email);
-    console.log("password", this.state.password);
     $.ajax({
       type: "POST",
       url: "/login",
@@ -33,13 +31,19 @@ class Login extends React.Component {
         email:    this.state.email,
         password: this.state.password
       }),
-      success: function(){
-        console.log('sucesss');
+      success: function(user){
+        // console.log('sucesss');
         // that.setState({
         //   showComponent: false,
         //   loggedIn: true
         // });
-        that.props.loginSuccess();
+        // console.log(data);
+        that.props.loginSuccess(user);
+        // so the login fields become empty after login
+        that.setState({
+          email: '',
+          password: ''
+        });
       },
       error: function(err){
         console.log("Error!!", err);
@@ -58,11 +62,19 @@ class Login extends React.Component {
   render() {
     const loggedIn = this.props.loggedIn ? 'Logout' : 'Login';
     const sideModals = this.props.sideModals;
+    const currentUser = this.props.currentUser;
     return (
       <div id="loginComponent">
         { sideModals.indexOf('login') !== -1 ?
           null :
           <button type="button" onClick={this.props._onLoginButtonClick}>{loggedIn}</button>
+        }
+        { currentUser ?
+          <div id="userGreeting">
+            <br />
+            <h3>"Hello {currentUser}!"</h3>
+          </div> :
+          null
         }
         { sideModals.indexOf('login') !== -1 ?
           <div id="loginForm">

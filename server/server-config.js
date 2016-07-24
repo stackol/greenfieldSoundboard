@@ -63,8 +63,9 @@ app.post('/login', function(req, res) {
           if (matches) {
             // log in
             // front-end: replace login button with logout button
-            req.session.user = user.get('id');
-            res.send(200);
+            req.session.user = {id: user.get('id'), name: user.get('name')};
+            console.log(req.session.user);
+            res.send(200, req.session.user.name);
           } else {
             //send response with flash, wrong password
             res.send(401, "wrong password!");
@@ -78,13 +79,14 @@ app.post('/login', function(req, res) {
 app.post('/signup', function(req, res) {
   var userEmail    = req.body.email;
   var userPassword = req.body.password;
+  var userName     = req.body.name;
 
   new User({email: userEmail}).fetch()
     .then(function(user) {
       if (!user) {
         // username available, add user!
         // add user to session
-        new User({email: userEmail, password: userPassword}).save();
+        new User({email: userEmail, password: userPassword, name: userName}).save();
         req.session.user = new User({email: userEmail}).fetch().get('id');
         res.send(200);
       } else {
