@@ -29,21 +29,17 @@ class Library extends React.Component{
   }
 
   clearSong() {
-    console.log('clearsong')
-    this.setState({
-      record : [],
-      recordNames:[]
-    })
+    this.props.clearRecord()
   }
 
   playSong() {
-    console.log('playsong')
     for (var i=0;i<this.props.recording.length;i++){
       this.props.recording[i].play()
     }
   }
 
   saveSong() {
+    var that = this;
     var title = this.state.title.toString()
     var recording = this.props.recording.toString()
     console.log('savesong',recording)
@@ -58,6 +54,7 @@ class Library extends React.Component{
       }),
       success: function(){
         console.log("success");
+          that.props.clearRecord()
       },
       error: function(err){
         console.error(err);
@@ -75,7 +72,9 @@ shouldComponentUpdate(nextProps, nextState) {
       <h2 style={{color:'white'}}>Record</h2>     
         <div className='library' id='library'>{ this.props.recordNames}</div>
       <div>
-         <button type="button" onClick={this.playSong.bind(this)}>Play Song</button><button type="button" onClick={this.saveSong.bind(this)}>Save Song</button>
+         <button type="button" onClick={this.playSong.bind(this)}>Play Song</button>
+         <button type="button" onClick={this.saveSong.bind(this)}>Save Song</button>
+         <button type="button" onClick={this.clearSong.bind(this)}>Clear Song</button>
        </div>
     </div>
     )

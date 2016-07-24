@@ -220,7 +220,7 @@ var App = React.createClass({
        }
        </div>
        <Levels/> 
-       <Library recording={this.state.record} recordNames={this.state.recordTitles.toString()}clearRecord={this.state.clearRecord}/>
+       <Library recording={this.state.record} recordNames={this.state.recordTitles.toString()} clearRecord={this.clearRecord}/>
         
      </div>
    )
