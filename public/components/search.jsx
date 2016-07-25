@@ -17,21 +17,27 @@ class Search extends React.Component {
     // var url = "http://www.freesound.org/apiv2/search/text/?query=cars&token=qB7MyU80ihRahPodU46OY8g5tTXoRj8lYZ9UfZA6";
     var apiUrl = "http://www.freesound.org/apiv2/search/text/?query=" + query + "&token=qB7MyU80ihRahPodU46OY8g5tTXoRj8lYZ9UfZA6";
     //var soundList = [];
+    var that = this;
     $.ajax({
       type: "GET",
       url: apiUrl,
       processData: false,
       contentType: "application/json",
       success: function(data){
+        // var searchResults = [];
+        // that.props.clearSearchResults();
         for(var i = 0; i < data.results.length; i++) {
           var soundUrl = "http://www.freesound.org/apiv2/sounds/" + data.results[i].id;
-          searchResults.push({
+          // searchResults.push({
+          that.props.addSearchResult({
             id: data.results[i].id,
             name: data.results[i].name,
             url: soundUrl
           });
           // searchResults.push("https://www.freesound.org/data/previews/1/" + data.results[i].id + "_600-hq.mp3");
         }
+        // console.log('searchResults:', searchResults);
+        // that.props.setSearchResults(searchResults);
         console.log('freesound.org ajax call returned data=', data);
         console.log('freesound.org ajax call returned searchResults=', searchResults);
       },
