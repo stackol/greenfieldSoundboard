@@ -3,12 +3,7 @@
 class Login extends React.Component {
   constructor(props) {
     super(props);
-    // console.log(this.props);
-    // console.log(this.state);
-    this.state = {
-      // showComponent: false
-    };
-    // this._onLoginButtonClick = this._onLoginButtonClick.bind(this);
+    this.state = {};
     this.attemptLogin = this.attemptLogin.bind(this);
   }
 
@@ -32,14 +27,7 @@ class Login extends React.Component {
         password: this.state.password
       }),
       success: function(user){
-        // console.log('sucesss');
-        // that.setState({
-        //   showComponent: false,
-        //   loggedIn: true
-        // });
-        // console.log(data);
         that.props.loginSuccess(user);
-        // so the login fields become empty after login
         that.setState({
           email: '',
           password: ''
@@ -47,17 +35,9 @@ class Login extends React.Component {
       },
       error: function(err){
         console.log("Error!!", err);
-        console.log("arguments", arguments);
       }
     });
   }
-
-  // logout() {
-  //   $.ajax({
-  //     type: "POST",
-  //     url: "/logout"
-  //   });
-  // }
 
   render() {
     const loggedIn = this.props.loggedIn ? 'Logout' : 'Login';
@@ -67,12 +47,12 @@ class Login extends React.Component {
       <div id="loginComponent">
         { sideModals.indexOf('login') !== -1 ?
           null :
-          <button type="button" onClick={this.props._onLoginButtonClick}>{loggedIn}</button>
+          <button type="button" className="button" onClick={this.props._onLoginButtonClick}>{loggedIn}</button>
         }
         { currentUser ?
           <div id="userGreeting">
             <br />
-            <h3>"Hello {currentUser}!"</h3>
+            <h3>Hello {currentUser}!</h3>
           </div> :
           null
         }
@@ -85,7 +65,7 @@ class Login extends React.Component {
               <input type="password" value={this.state.password} placeholder="Password" onChange={this.handlePasswordChange.bind(this)} />
             </p>
             <p class="submit">
-              <input type="submit" value="Login" onClick={this.attemptLogin} />
+              <button type="button" className="button" value="Login" onClick={this.attemptLogin}>Login</button>
             </p>
           </div> :
           null

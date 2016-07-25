@@ -82,6 +82,7 @@ var App = React.createClass({
         currentUser: null,
         loggedIn: false
       });
+      this.logout();
     } else {
       var newSideModals = this.state.sideModals.concat(['login']);
       this.setState({
@@ -97,6 +98,19 @@ var App = React.createClass({
       sideModals: newSideModals,
       loggedIn: true,
       currentUser: user
+    });
+  },
+
+  logout: function() {
+    $.ajax({
+      type: "POST",
+      url: "/logout",
+      success: function(){
+        console.log("success");
+      },
+      error: function(err){
+        console.log("Error!!", err);
+      }
     });
   },
 
@@ -205,20 +219,21 @@ var App = React.createClass({
   const userText = this.state.loggedIn ? 'Logout' : 'Login';
    return (
      <div id="appWindow">
-      <Login
-        _onLoginButtonClick={this._onLoginButtonClick}
-        loginSuccess={this.loginSuccess}
-        sideModals={this.state.sideModals}
-        loggedIn={this.state.loggedIn}
-        currentUser={this.state.currentUser}
-      />
+      <ul id="navBar"><li><a><Login
+          _onLoginButtonClick={this._onLoginButtonClick}
+          loginSuccess={this.loginSuccess}
+          sideModals={this.state.sideModals}
+          loggedIn={this.state.loggedIn}
+          currentUser={this.state.currentUser}
+        /></a></li>
+        </ul>
        <div id = "bindingWindow">
          <h3>Click on a file to change the binding of {this.state.changeKey.toUpperCase()} to</h3>
            <ul id="binding">
            {
-             this.state.soundList.map( (sound, idx) => ( //es6 again
-               <RebindNode key={idx} targetSong = {sound} targetKey = {this.state.changeKey} bindings = {this.state.bindings} reRender={this.reRender}/>
-             ), this)
+            //  this.state.soundList.map( (sound, idx) => ( //es6 again
+            //    <RebindNode key={idx} targetSong = {sound} targetKey = {this.state.changeKey} bindings = {this.state.bindings} reRender={this.reRender}/>
+            //  ), this)
            }
            </ul>
        </div>
