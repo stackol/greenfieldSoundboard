@@ -22,6 +22,7 @@ db.schema.hasTable('users').then(function(exists) {
       user.increments('id').primary();
       user.string('email', 100).unique();
       user.string('password', 100);
+      user.string('name', 100);
       user.timestamps();
     }).then(function () {
       console.log('Created users table');

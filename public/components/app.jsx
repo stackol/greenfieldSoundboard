@@ -75,18 +75,28 @@ var App = React.createClass({
   },
 
   _onLoginButtonClick: function() {
-    var newSideModals = this.state.sideModals.concat(['login']);
-    this.setState({
-      sideModals: newSideModals,
-    });
+    // if already logged in, logout (get change state of currentUser and loggedIn)
+    // TO-DO: - send logout ajax call to server so user gets deleted from session
+    if (this.state.loggedIn) {
+      this.setState({
+        currentUser: null,
+        loggedIn: false
+      });
+    } else {
+      var newSideModals = this.state.sideModals.concat(['login']);
+      this.setState({
+        sideModals: newSideModals,
+      });
+    }
   },
 
-  loginSuccess: function() {
+  loginSuccess: function(user) {
     var newSideModals = this.state.sideModals;
     newSideModals.pop();
     this.setState({
       sideModals: newSideModals,
-      loggedIn: true
+      loggedIn: true,
+      currentUser: user
     });
   },
 
@@ -195,6 +205,7 @@ var App = React.createClass({
         loginSuccess={this.loginSuccess}
         sideModals={this.state.sideModals}
         loggedIn={this.state.loggedIn}
+        currentUser={this.state.currentUser}
       />
        <div id = "bindingWindow">
          <h3>Click on a file to change the binding of {this.state.changeKey.toUpperCase()} to</h3>
