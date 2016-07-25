@@ -1,3 +1,4 @@
+
 //sample input:
 //This example would bind the 'a' key to the "example.wav" file.
 //{
@@ -10,6 +11,7 @@
 // App React class.  Contains a number of methods which control the audio, as well as rendering pretty much the whole damn app.
 var App = React.createClass({
   //declaring some states.
+  
   getInitialState: () => (
      {
       bindings: [],
@@ -18,8 +20,10 @@ var App = React.createClass({
       record: [],
       loggedIn: false,
       sideModals: [],
-      keyMap: {}
+      keyMap: {},
+      recordTitles:[]
     }
+
   ),
   //once the component mounts, we set those states equal to the correct data.  We also hide the binding window using JQuery until it is required.
   componentDidMount: function() {
@@ -101,13 +105,18 @@ var App = React.createClass({
         keyNumber = key.charCodeAt(),
         $audio = document.getElementById(keyNumber),
         $vKey = $('#' + keyNumber).parent();
-
+    var tmp1 = this.state.recordTitles;
     var tmp = this.state.record;
     tmp.push($audio);
-    tmp.push(this.state.keyMap[keyNumber]);
+    var tmpstr = this.state.keyMap[keyNumber].toString()
+    var a = this.state.keyMap[keyNumber].lastIndexOf('/')
+    tmpstr=this.state.keyMap[keyNumber].slice(a+1,-4)
+    tmp1.push(" " + tmpstr)
     this.setState({
+      recordTitles:tmp1,
       record: tmp
     })
+
 
     // handles the ctrl+key menu drop.
     // originally checked boolean value [ event.ctrlKey ] to check to see if ctrl was
@@ -169,9 +178,11 @@ var App = React.createClass({
       </div>, document.getElementById('app')
     );
   },
+
   clearRecord: function(){
     this.setState({
-      record : []
+      record : [],
+      recordTitles:[]
     })
   },
 
@@ -208,8 +219,9 @@ var App = React.createClass({
          )
        }
        </div>
-       <Levels/>
-       <Library record={this.state.record} clearRecord={this.state.clearRecord}/>
+       <Levels/> 
+       <Library recording={this.state.record} recordNames={this.state.recordTitles.toString()} clearRecord={this.clearRecord}/>
+        
      </div>
    )
  }
@@ -228,3 +240,6 @@ setTimeout(function() {
   );
 
 }, 2000);
+
+
+window.App = App;

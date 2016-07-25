@@ -13,6 +13,7 @@ var session      = require('express-session');
 var app = express();
 
 var User = require('./models/user');
+var Song = require('./models/song');
 
 
 // for development
@@ -122,7 +123,7 @@ app.post('/saveSong', function(req,res){
 });
 
 app.get('/getSonglibrary', function(req,res){
-  new Song.fetchAll().then(function(data){
+   Song.fetchAll().then(function(data){
     res.send(data)
   }).catch(function(err){
     console.error(err);
@@ -154,11 +155,11 @@ app.get('/defaults', function (req, res) {
     103: "/soundfiles/pew-pew.wav",
     104: "/soundfiles/grendel.wav",
     105: "/soundfiles/derp-yell.wav",
-    106: "/soundfiles/beltbuckle.wav",
+    106: "/soundfiles/belt-buckle.wav",
     107: "/soundfiles/oh-yeah.wav",
     108: "/soundfiles/power-up.wav",
     109: "/soundfiles/straight-techno-beat.wav",
-    110: "/soundfiles/kamehameha.wav",
+    110: "/soundfiles/kame-hameha.wav",
     111: "/soundfiles/fart.wav",
     112: "/soundfiles/heavy-rain.wav",
     113: "/soundfiles/jet-whoosh.wav",
