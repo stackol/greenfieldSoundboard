@@ -258,6 +258,15 @@ var App = React.createClass({
           currentUser={this.state.currentUser}
           removeModal={this.removeModal}
         /></a></li>
+        <li>
+          <Search searchInputClick={ this.searchInputClick } searchButtonClick={ this.searchButtonClick } setSearchResults={ this.setSearchResults } addSearchResult={ this.addSearchResult } clearSearchResults={ this.clearSearchResults } />
+        </li>
+        <li>
+          <SearchResults getSearchResults={ this.getSearchResults } />
+        </li>
+        <li>
+          <InstrumentList handleClick={ this.bindTo } />
+        </li>
         </ul>
         <div id="greeting">
            {this.state.currentUser ?
@@ -275,9 +284,6 @@ var App = React.createClass({
            }
            </ul>
        </div>
-       <Search searchInputClick={ this.searchInputClick } searchButtonClick={ this.searchButtonClick } setSearchResults={ this.setSearchResults } addSearchResult={ this.addSearchResult } clearSearchResults={ this.clearSearchResults } />
-       <SearchResults getSearchResults={ this.getSearchResults } />
-       <InstrumentList handleClick={ this.bindTo } />
        <div id='keyboardWindow' className="keyboard">
        {
          this.state.bindings.map( (keyBinding, idx) => //yay es6

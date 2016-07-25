@@ -80,18 +80,6 @@ var Login = function (_React$Component) {
           { type: "button", className: "button", onClick: this.props._onLoginButtonClick },
           loggedIn
         ),
-        currentUser ? React.createElement(
-          "div",
-          { id: "userGreeting" },
-          React.createElement("br", null),
-          React.createElement(
-            "h3",
-            null,
-            "Hello ",
-            currentUser,
-            "!"
-          )
-        ) : null,
         sideModals.indexOf('login') !== -1 ? React.createElement(
           "div",
           { id: "loginForm" },
