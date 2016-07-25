@@ -5,6 +5,7 @@ class Login extends React.Component {
     super(props);
     this.state = {};
     this.attemptLogin = this.attemptLogin.bind(this);
+    this.cancelLogin = this.cancelLogin.bind(this);
   }
 
   handleEmailChange(event) {
@@ -39,6 +40,12 @@ class Login extends React.Component {
     });
   }
 
+  cancelLogin() {
+    console.log("got to cancelLogin woooooo!!");
+    console.log("this", this);
+    this.props.removeModal('login');
+  }
+
   render() {
     const loggedIn = this.props.loggedIn ? 'Logout' : 'Login';
     const sideModals = this.props.sideModals;
@@ -64,9 +71,10 @@ class Login extends React.Component {
             <p>
               <input type="password" value={this.state.password} placeholder="Password" onChange={this.handlePasswordChange.bind(this)} />
             </p>
-            <p class="submit">
-              <button type="button" className="button" value="Login" onClick={this.attemptLogin}>Login</button>
-            </p>
+            <div class="buttons">
+              <button type="button" className="floated button" value="Login" onClick={this.attemptLogin}>Login</button>
+              <button type="button" className="floated button" value="Cancel" onClick={this.cancelLogin}>Cancel</button>
+            </div>
           </div> :
           null
         }

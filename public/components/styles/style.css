@@ -9,11 +9,11 @@ body {
     background-color: #4CAF50; /* Green */
     border: none;
     color: white;
-    padding: 10px 24px;
+    padding: 8px 10px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 14px;
+    font-size: 13px;
 }
 
 .song-list-entry{
@@ -340,4 +340,9 @@ canvas {
 
 ul {
   list-style-type: none;
+}
+
+.floated {
+  float: left;
+  margin-right: 5px;
 }

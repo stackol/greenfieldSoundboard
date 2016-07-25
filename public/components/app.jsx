@@ -74,6 +74,14 @@ var App = React.createClass({
     this.serverRequest.abort();
   },
 
+  removeModal: function(modal) {
+    var newSideModals = this.state.sideModals;
+    newSideModals.splice(newSideModals.indexOf(modal), 1);
+    this.setState({
+      sideModals: newSideModals
+    });
+  },
+
   _onLoginButtonClick: function() {
     // if already logged in, logout (get change state of currentUser and loggedIn)
     // TO-DO: - send logout ajax call to server so user gets deleted from session
@@ -225,15 +233,16 @@ var App = React.createClass({
           sideModals={this.state.sideModals}
           loggedIn={this.state.loggedIn}
           currentUser={this.state.currentUser}
+          removeModal={this.removeModal}
         /></a></li>
         </ul>
        <div id = "bindingWindow">
          <h3>Click on a file to change the binding of {this.state.changeKey.toUpperCase()} to</h3>
            <ul id="binding">
            {
-            //  this.state.soundList.map( (sound, idx) => ( //es6 again
-            //    <RebindNode key={idx} targetSong = {sound} targetKey = {this.state.changeKey} bindings = {this.state.bindings} reRender={this.reRender}/>
-            //  ), this)
+             this.state.soundList.map( (sound, idx) => ( //es6 again
+               <RebindNode key={idx} targetSong = {sound} targetKey = {this.state.changeKey} bindings = {this.state.bindings} reRender={this.reRender}/>
+             ), this)
            }
            </ul>
        </div>
