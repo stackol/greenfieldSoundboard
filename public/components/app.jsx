@@ -219,13 +219,14 @@ var App = React.createClass({
   const userText = this.state.loggedIn ? 'Logout' : 'Login';
    return (
      <div id="appWindow">
-      <Login
+      <ul id="navBar"><li><a><Login
           _onLoginButtonClick={this._onLoginButtonClick}
           loginSuccess={this.loginSuccess}
           sideModals={this.state.sideModals}
           loggedIn={this.state.loggedIn}
           currentUser={this.state.currentUser}
-        />
+        /></a></li>
+        </ul>
        <div id = "bindingWindow">
          <h3>Click on a file to change the binding of {this.state.changeKey.toUpperCase()} to</h3>
            <ul id="binding">
