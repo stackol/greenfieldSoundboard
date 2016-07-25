@@ -1,16 +1,26 @@
 
 var path = require('path');
+// var db = require('knex')({
+//   client: 'sqlite3',
+//   connection: {
+//     host: '127.0.0.1',
+//     user: 'your_database_user',
+//     password: 'password',
+//     database: 'soundboard',
+//     charset: 'utf8',
+//     filename: path.join(__dirname, '../db/sb.sqlite')
+//   }
+// });
 var db = require('knex')({
-  client: 'sqlite3',
-  connection: {
-    host: '127.0.0.1',
-    user: 'your_database_user',
-    password: 'password',
-    database: 'soundboard',
-    charset: 'utf8',
-    filename: path.join(__dirname, '../db/sb.sqlite')
-  }
+  client: 'postgresql',
+  connection: process.env.DATABASE_URL
 });
+
+// var knex = require('knex')({            //Uncomment this to make this file work locally
+//   client: 'sqlite3',
+//   connection: {filename: './data/data.db'},
+//   useNullAsDefault: true
+// });
 
 db.schema.hasTable('users').then(function(exists) {
   if (!exists) {
@@ -18,6 +28,7 @@ db.schema.hasTable('users').then(function(exists) {
       user.increments('id').primary();
       user.string('email', 100).unique();
       user.string('password', 100);
+      user.string('name', 100);
       user.timestamps();
     }).then(function () {
       console.log('Created users table');
@@ -28,9 +39,8 @@ db.schema.hasTable('songs').then(function(exists) {
   if (!exists) {
     db.schema.createTable('songs', function (song) {
       song.increments('id').primary();
-      song.varchar('record');
-      song.varchar('title');
-      song.timestamps();
+      song.string('record', 400);
+      song.string('title', 100);
     }).then(function () {
       console.log('Created songs table');
     });

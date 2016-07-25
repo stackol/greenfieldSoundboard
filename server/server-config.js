@@ -13,6 +13,7 @@ var session      = require('express-session');
 var app = express();
 
 var User = require('./models/user');
+var Song = require('./models/song');
 
 
 // for development
@@ -62,8 +63,8 @@ app.post('/login', function(req, res) {
           if (matches) {
             // log in
             // front-end: replace login button with logout button
-            req.session.user = user.get('id');
-            res.send(200);
+            req.session.user = {id: user.get('id'), name: user.get('name')};
+            res.send(200, req.session.user.name);
           } else {
             //send response with flash, wrong password
             res.send(401, "wrong password!");
@@ -73,17 +74,25 @@ app.post('/login', function(req, res) {
     });
 });
 
+// logout and delete user session
+app.post('/logout', function(req, res) {
+  delete req.session.user;
+  console.log("user session should be undefined", req.session.user);
+  res.send(200);
+});
+
 // post for '/signup', if successful adds user to db
 app.post('/signup', function(req, res) {
   var userEmail    = req.body.email;
   var userPassword = req.body.password;
+  var userName     = req.body.name;
 
   new User({email: userEmail}).fetch()
     .then(function(user) {
       if (!user) {
         // username available, add user!
         // add user to session
-        new User({email: userEmail, password: userPassword}).save();
+        new User({email: userEmail, password: userPassword, name: userName}).save();
         req.session.user = new User({email: userEmail}).fetch().get('id');
         res.send(200);
       } else {
@@ -95,7 +104,6 @@ app.post('/signup', function(req, res) {
 //returns an array of all the sounds in foley folder
 app.get('/default', function (req, res) {
   fs.readdir(path.join(__dirname + '/../foley/'), function(err, files) {
-  // fs.readdir(path.join(__dirname + '/../piano/'), function(err, files) {
     if (err) console.error(err);
     res.send(files);
   });
@@ -123,7 +131,7 @@ app.post('/saveSong', function(req,res){
 });
 
 app.get('/getSonglibrary', function(req,res){
-  new Song.fetchAll().then(function(data){
+   Song.fetchAll().then(function(data){
     res.send(data)
   }).catch(function(err){
     console.error(err);
@@ -155,11 +163,11 @@ app.get('/defaults', function (req, res) {
     103: "/soundfiles/pew-pew.wav",
     104: "/soundfiles/grendel.wav",
     105: "/soundfiles/derp-yell.wav",
-    106: "/soundfiles/beltbuckle.wav",
+    106: "/soundfiles/belt-buckle.wav",
     107: "/soundfiles/oh-yeah.wav",
     108: "/soundfiles/power-up.wav",
     109: "/soundfiles/straight-techno-beat.wav",
-    110: "/soundfiles/kamehameha.wav",
+    110: "/soundfiles/kame-hameha.wav",
     111: "/soundfiles/fart.wav",
     112: "/soundfiles/heavy-rain.wav",
     113: "/soundfiles/jet-whoosh.wav",
