@@ -123,7 +123,7 @@ app.post('/saveSong', function(req,res){
 });
 
 app.get('/getSonglibrary', function(req,res){
-  new Song.fetchAll().then(function(data){
+   Song.fetchAll().then(function(data){
     res.send(data)
   }).catch(function(err){
     console.error(err);

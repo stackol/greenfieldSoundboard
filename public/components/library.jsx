@@ -6,12 +6,13 @@ class Library extends React.Component{
       recordNames:props.recordNames,
       record:props.recording,
       clearSong:props.clearRecord,
-      library:[],
+      library:['library...'],
       title:""
     }
    }
   
   getSonglibrary() {
+    var that = this;
      $.ajax({
       type: "GET",
       url: "/getSonglibrary",
@@ -20,7 +21,13 @@ class Library extends React.Component{
       ,
       success: function(data){
         console.log("success", data);
-        return(data);
+        var lib=[]
+        for (var i=0;i<data.length;i++){
+           lib.push(data[i].record)
+        }
+        that.state.library = lib;
+        that.forceUpdate()
+        return(lib);
       },
       error: function(err){
         console.error(err);
@@ -41,7 +48,7 @@ class Library extends React.Component{
   saveSong() {
     var that = this;
     var title = this.state.title.toString()
-    var recording = this.props.recording.toString()
+    var recording = this.props.recordNames.toString()
     console.log('savesong',recording)
      $.ajax({
       type: "POST",
@@ -61,20 +68,36 @@ class Library extends React.Component{
       }
     });
   }
- 
+handleClick(audio){
+   audio.play();
+}
 shouldComponentUpdate(nextProps, nextState) {
-  return this.props.recordNames !== nextProps.recordNames;
+  return true;
+
  }
+ handlelibraryClick(audio){
+   audio.play();
+ }
+componentDidMount(){
+  //$('.libraryList').hide();
+}
 
   render() {
      return (
-    <div>    
-      <h2 style={{color:'white'}}>Record</h2>     
-        <div className='library' id='library'>{ this.props.recordNames}</div>
+    <div id='library'>    
+          
+        <div id='libraryrow'>
+        <h2 style={{color:'white'}}>Record</h2> 
+           <SongList id='songlist' songs={this.props.recordNames} handleClick={this.handleClick.bind(this)}/> 
+           <h2 style={{color:'white'}}>Library</h2> 
+           <LibraryList id='librarylist' records={this.state.library} handleClick={this.handlelibraryClick.bind(this)}/>
+
+        </div>
       <div>
          <button type="button" onClick={this.playSong.bind(this)}>Play Song</button>
          <button type="button" onClick={this.saveSong.bind(this)}>Save Song</button>
          <button type="button" onClick={this.clearSong.bind(this)}>Clear Song</button>
+         <button type="button" onClick={this.getSonglibrary.bind(this)}>Get Song Library</button>
        </div>
     </div>
     )

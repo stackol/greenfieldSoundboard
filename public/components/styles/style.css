@@ -4,10 +4,34 @@ body {
   min-width: 100%;
   max-width: 100%;
 }
+.song-list-entry{
+  width: 200px;
+  margin:0 auto;
+  background-color:lightblue;
+  border: 4px solid black;
+}
+.library-list-entry{
+  width: 200px;
+  margin-left:50%;
+  background-color:yellow;
+  border: 4px solid black;
+}
+.librarylist {
+  display:table-cell;
+  width:200px;
+}
+.songlist {
+  display:table-cell;
+  width:200px;
+}
+.libraryrow {
+  display:table-row;
+}
 .library {
+  display:table;
+  width: 400;
   height:380;
-  width:70%; 
-  margin-left:15%;
+  margin:0 auto;
   background-color:white;
   border-radius:8px;
   border: 4px solid black;
