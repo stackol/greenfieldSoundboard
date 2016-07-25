@@ -220,19 +220,19 @@ var App = React.createClass({
    return (
      <div id="appWindow">
       <Login
-        _onLoginButtonClick={this._onLoginButtonClick}
-        loginSuccess={this.loginSuccess}
-        sideModals={this.state.sideModals}
-        loggedIn={this.state.loggedIn}
-        currentUser={this.state.currentUser}
-      />
+          _onLoginButtonClick={this._onLoginButtonClick}
+          loginSuccess={this.loginSuccess}
+          sideModals={this.state.sideModals}
+          loggedIn={this.state.loggedIn}
+          currentUser={this.state.currentUser}
+        />
        <div id = "bindingWindow">
          <h3>Click on a file to change the binding of {this.state.changeKey.toUpperCase()} to</h3>
            <ul id="binding">
            {
-             this.state.soundList.map( (sound, idx) => ( //es6 again
-               <RebindNode key={idx} targetSong = {sound} targetKey = {this.state.changeKey} bindings = {this.state.bindings} reRender={this.reRender}/>
-             ), this)
+            //  this.state.soundList.map( (sound, idx) => ( //es6 again
+            //    <RebindNode key={idx} targetSong = {sound} targetKey = {this.state.changeKey} bindings = {this.state.bindings} reRender={this.reRender}/>
+            //  ), this)
            }
            </ul>
        </div>

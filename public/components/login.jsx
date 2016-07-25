@@ -3,12 +3,7 @@
 class Login extends React.Component {
   constructor(props) {
     super(props);
-    // console.log(this.props);
-    // console.log(this.state);
-    this.state = {
-      // showComponent: false
-    };
-    // this._onLoginButtonClick = this._onLoginButtonClick.bind(this);
+    this.state = {};
     this.attemptLogin = this.attemptLogin.bind(this);
   }
 
@@ -52,7 +47,7 @@ class Login extends React.Component {
       <div id="loginComponent">
         { sideModals.indexOf('login') !== -1 ?
           null :
-          <button type="button" onClick={this.props._onLoginButtonClick}>{loggedIn}</button>
+          <button type="button" className="button" onClick={this.props._onLoginButtonClick}>{loggedIn}</button>
         }
         { currentUser ?
           <div id="userGreeting">
@@ -70,7 +65,7 @@ class Login extends React.Component {
               <input type="password" value={this.state.password} placeholder="Password" onChange={this.handlePasswordChange.bind(this)} />
             </p>
             <p class="submit">
-              <input type="submit" value="Login" onClick={this.attemptLogin} />
+              <button type="button" className="button" value="Login" onClick={this.attemptLogin}>Login</button>
             </p>
           </div> :
           null
