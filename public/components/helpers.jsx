@@ -5,8 +5,11 @@
 //  ...
 //}
 var instruments = [
+  'default',
   'piano'
 ]
+var freq = [32, 64, 125, 250, 500, 1000, 2000, 4000, 8000, 16000];
+var qValues = [2, 2, 2, 2, 2, 1.68, 1.68, 1.68];
 var pianoKeys = {
   97: "/piano/c.wav",
   119: "/piano/cH.wav",
@@ -50,7 +53,7 @@ var defaultKeys = {
   121: "/soundfiles/techno-drums.wav",
   122: "/soundfiles/guitar-chord.wav"
 };
-var pianoMap = [
+var pianoBoard = [
   119,
   101,
   32,
@@ -66,7 +69,7 @@ var pianoMap = [
   104,
   106,
 ]
-var qwertyMap = [
+var defaultBoard = [
  113,
  119,
  101,
@@ -96,6 +99,17 @@ var qwertyMap = [
  110,
  109
 ];
+
+var map = {
+  default: {
+    board: defaultBoard,
+    keys: defaultKeys
+  },
+  piano: {
+    board: pianoBoard,
+    keys: pianoKeys
+  }
+}
 
 var keyCodes = {
   3 : "break",

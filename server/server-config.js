@@ -93,7 +93,7 @@ app.post('/signup', function(req, res) {
 });
 
 //returns an array of all the sounds in foley folder
-app.get('/sounds', function (req, res) {
+app.get('/default', function (req, res) {
   fs.readdir(path.join(__dirname + '/../foley/'), function(err, files) {
   // fs.readdir(path.join(__dirname + '/../piano/'), function(err, files) {
     if (err) console.error(err);
@@ -106,6 +106,28 @@ app.get('/piano', function (req, res) {
     if (err) console.error(err);
     res.send(files);
   });
+});
+
+app.get('/presets', function(req, res) {
+  var presets = [['Null Filter', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  ['Bass Reducer', -25, -25, -25, 0, 0, 0, 0, 0, 0, 0],
+  ['Bass Booster', 25, 25, 25, 0, 0, 0, 0, 0, 0, 0]];
+  res.send(presets);
+})
+
+app.post('/saveSong', function(req,res){
+  var record = req.body.record;
+  var title = req.body.title;
+  new Song({record: record, title:title}).save();
+  res.send(200);
+});
+
+app.get('/getSonglibrary', function(req,res){
+  new Song.fetchAll().then(function(data){
+    res.send(data)
+  }).catch(function(err){
+    console.error(err);
+  })
 });
 
 app.get('/defaults', function (req, res) {
