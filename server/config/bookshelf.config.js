@@ -34,7 +34,7 @@ db.schema.hasTable('songs').then(function(exists) {
     db.schema.createTable('songs', function (song) {
       song.increments('id').primary();
       song.string('record', 400);
-      song.string('title', 100); 
+      song.string('title', 100);
     }).then(function () {
       console.log('Created songs table');
     });
