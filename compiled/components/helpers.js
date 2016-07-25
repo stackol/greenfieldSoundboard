@@ -10,7 +10,7 @@ var qValues = [2, 2, 2, 2, 2, 1.68, 1.68, 1.68];
 
 var instruments = ['default', 'piano'];
 
-var searchResults = ['bohee'];
+var searchResults = [];
 
 var map = {
   default: {

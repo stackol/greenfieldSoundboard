@@ -1,5 +1,5 @@
 /**
- *   This file creates a levels display and equalizer for the app using the web audio api. All audio elements of the page are 
+ *   This file creates a levels display and equalizer for the app using the web audio api. All audio elements of the page are
  *   merged into one audio node, which then passes through a 10 channel equalizer implemented with 10 biquadfilters. From there
  *   it is passed to an analyzer node which collects the data for the levels visualization
  **/
@@ -14,8 +14,8 @@ var Levels = React.createClass({
 			ac: new window.AudioContext(),
 			analyzer: null,
 			filters: null,
-			width: 800,				//  for the canvas element holding the levels display
-			height: 300,
+			width: 400,				//  for the canvas element holding the levels display
+			height: 150,
 			presets: []
 		}
 	},
@@ -23,9 +23,9 @@ var Levels = React.createClass({
 	//  called when the button is clicked, starts off the rest of this code to create the levels display/eq
 	startLevels: function() {
 			$.get(window.location.href + "presets", function(result) {			//  loads the equalizer presets from the server
-				
+
 				var tempArray = [];
-				
+
 				for (var i = 0; i < this.state.audioElms.length; i++) {				//  if the audio node has been loaded before we must disconnect it
 					this.state.audioElms[i].disconnect();												//  before using it again
 					tempArray.push(this.state.audioElms[i]);
@@ -33,7 +33,7 @@ var Levels = React.createClass({
 
 				var $elms = $('audio.unloaded');
 				$elms.attr('class', 'loaded');
-				
+
 				for (var i = 0; i < $elms.length; i++) {
 					var temp = this.state.ac.createMediaElementSource($elms[i]);
 					tempArray.push(temp);
@@ -47,7 +47,7 @@ var Levels = React.createClass({
 				}, this.checkLevels);			//  calls next function in the chain
 			}.bind(this));
 
-	}, 
+	},
 
 	//  sets up the audio node chain that implements the equalizer and levels display
 	checkLevels: function() {
@@ -80,7 +80,7 @@ var Levels = React.createClass({
 		//  runs the audio through the equalizer and the filter
 		this.setState({filters: tempArray}, function() {
 			merge2.connect(this.state.filters[0]);
-			
+
 			for (var i = 1; i < 10; i++) {
 				this.state.filters[i - 1].connect(this.state.filters[i]);
 			}
@@ -96,13 +96,13 @@ var Levels = React.createClass({
 	updateLevels: function() {
 		var len = this.state.analyzer.frequencyBinCount;
 		var data = new Uint8Array(len);
-		
+
 		this.state.analyzer.getByteFrequencyData(data);
 		this.state.container.clearRect(0, 0, this.state.width, this.state.height);
-		
+
 		var width = this.state.width / len;
 		var coefficient = 255 / len;
-    
+
     var gradient = this.state.container.createLinearGradient(0,0, this.state.width, 0);
     gradient.addColorStop(0, "#DB36A4");
     gradient.addColorStop(1, "#F7FF00");
@@ -124,11 +124,10 @@ var Levels = React.createClass({
 	render: function() {
 		return (
 			<div>
-				<div className="levels">	
+				<div className="levels">
 					<canvas width={this.state.width} height={this.state.height}></canvas>
-				</div>
-				<div>
-					<button type="button" onClick={this.startLevels}>Click to initiliaze levels and equalizer</button>
+					<br />
+					<button className="button" onClick={this.startLevels}>Click to initiliaze levels and equalizer</button>
 					<select onChange={this.changePreset}>
 						{
 							this.state.presets.map(function(preset, index) {

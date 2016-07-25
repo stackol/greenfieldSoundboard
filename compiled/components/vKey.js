@@ -22,11 +22,6 @@ var VKey = React.createClass({
         { className: 'keyLabel' },
         keyCodes[this.props.keyId]
       ),
-      React.createElement(
-        'p',
-        { className: 'filename' },
-        this.props.path.split('/')[2].slice(0, -4).split("-").join(" ")
-      ),
       React.createElement('audio', { className: 'unloaded', id: this.props.keyId, src: this.props.path, onEnded: this.handleAudioEnd, preload: 'auto' })
     );
   }

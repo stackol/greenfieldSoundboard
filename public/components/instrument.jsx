@@ -1,6 +1,6 @@
 var Instrument = ({instrument, handleClick}) => (
-  <div className="" onClick={() => handleClick(instrument)}>
-    {instrument}
+  <div className="instrumentNav" onClick={() => handleClick(instrument)}>
+    <button className="button">{instrument}</button>
   </div>
 );
 

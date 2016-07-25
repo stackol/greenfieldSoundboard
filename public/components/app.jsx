@@ -249,7 +249,8 @@ var App = React.createClass({
   const userText = this.state.loggedIn ? 'Logout' : 'Login';
    return (
      <div id="appWindow">
-      <ul id="navBar"><li><a><Login
+      <ul id="navBar">
+        <li><a><Login
           _onLoginButtonClick={this._onLoginButtonClick}
           loginSuccess={this.loginSuccess}
           sideModals={this.state.sideModals}
@@ -257,7 +258,22 @@ var App = React.createClass({
           currentUser={this.state.currentUser}
           removeModal={this.removeModal}
         /></a></li>
+        <li>
+          <Search searchInputClick={ this.searchInputClick } searchButtonClick={ this.searchButtonClick } setSearchResults={ this.setSearchResults } addSearchResult={ this.addSearchResult } clearSearchResults={ this.clearSearchResults } />
+        </li>
+        <li>
+          <SearchResults getSearchResults={ this.getSearchResults } />
+        </li>
+        <li>
+          <InstrumentList handleClick={ this.bindTo } />
+        </li>
         </ul>
+        <div id="greeting">
+           {this.state.currentUser ?
+             <h2>Hello, {this.state.currentUser}!!</h2> :
+             null
+           }
+        </div>
        <div id = "bindingWindow">
          <h3>Click on a file to change the binding of {this.state.changeKey.toUpperCase()} to</h3>
            <ul id="binding">
@@ -268,9 +284,6 @@ var App = React.createClass({
            }
            </ul>
        </div>
-       <Search searchInputClick={ this.searchInputClick } searchButtonClick={ this.searchButtonClick } setSearchResults={ this.setSearchResults } addSearchResult={ this.addSearchResult } clearSearchResults={ this.clearSearchResults } />
-       <SearchResults getSearchResults={ this.getSearchResults } />
-       <InstrumentList handleClick={ this.bindTo } />
        <div id='keyboardWindow' className="keyboard">
        {
          this.state.bindings.map( (keyBinding, idx) => //yay es6
@@ -280,8 +293,10 @@ var App = React.createClass({
          )
        }
        </div>
-       <Levels/>
-       <Library recording={this.state.record} recordNames={this.state.recordTitles.toString()} clearRecord={this.clearRecord}/>
+       <div id="tools">
+         <Levels/>
+         <Library recording={this.state.record} recordNames={this.state.recordTitles.toString()} clearRecord={this.clearRecord}/>
+       </div>
 
      </div>
    )
@@ -293,14 +308,16 @@ var App = React.createClass({
 //This simulates a loading page. In all of our tests the server loaded the sound
 //files instantly but by the time we noticed this we already had an awesome
 //loading page up and running. This timeout feature honors that hard work
+
+//update: all cats should die
 setTimeout(function() {
-  document.getElementById('secretSound').pause();
+  // document.getElementById('secretSound').pause();
   ReactDOM.render(<div>
     <App/>
     </div>, document.getElementById('app')
   );
 
-}, 2000);
+}, 50);
 
 
 window.App = App;

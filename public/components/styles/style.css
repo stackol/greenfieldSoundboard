@@ -18,36 +18,28 @@ body {
 
 .song-list-entry{
   width: 200px;
-  margin:0 auto;
   background-color:lightblue;
   border: 4px solid black;
 }
 .library-list-entry{
   width: 200px;
-  margin-left:50%;
   background-color:yellow;
   border: 4px solid black;
 }
-.librarylist {
-  display:table-cell;
-  width:200px;
+#libraryDiv {
+  display:inline-block;
 }
-.songlist {
-  display:table-cell;
-  width:200px;
+
+#recordDiv {
+  display:inline-block;
 }
-.libraryrow {
-  display:table-row;
-}
-.library {
-  display:table;
-  width: 400;
+
+#library {
+  margin-top: 25px;
+  display:inline-block;
   height:380;
-  margin:0 auto;
-  background-color:white;
-  border-radius:8px;
-  border: 4px solid black;
 }
+
 .loading {
   margin:0 auto;
   text-align: center;
@@ -55,7 +47,7 @@ body {
   max-width:90%;
 }
 
-.intro{
+/*.intro{
   font-family: 'Audiowide', cursive;
   margin: 50px auto;
   text-align:center;
@@ -67,9 +59,9 @@ body {
   animation:blur .75s ease-out infinite;
   text-shadow:0 0 5px #ffff00,
       0 0 7px #ffff00;
-}
+}*/
 
-@keyframes blur {
+/*@keyframes blur {
       text-shadow:0 0 10px #ffa500,
       0 0 10px #ffa500,
       0 0 25px #ffa500,
@@ -88,7 +80,7 @@ body {
       0 10px 100px #fe0000,
       0 -10px 100px #fe0000,
       0 -10px 100px #fe0000;
-}
+}*/
 
 /*#appWindow {
   overflow: scroll;
@@ -100,42 +92,27 @@ body {
 }*/
 
 .keyboard {
-  /*margin:20px 20px auto;*/
-  /*border: 2px solid black;*/
   text-align: center;
-  border-radius:8px;
   max-width:100%;
-  /*min-width: 100%;*/
-
 }
 
 .key {
   font-family: sans-serif;
   margin: 0 auto;
-  padding: 10px;
+  padding: 0 8px;
   display: inline-block;
   border: 2px solid black;
   border-radius: 4px;
-  min-width: 25px;
-  max-width: 40px;
-  max-height: 140px;
+  width: 50px;
+  height: 50px;
   text-align: center;
-  box-shadow: 10px 5px 10px 0 black;
   background-color: white;
 }
 
 .keyLabel {
   position:relative;
-  bottom:10px;
   margin: auto;
-  font-size: 20px;
-  text-align: center;
-}
-
-.filename {
-  position:relative;
-  bottom:25px;
-  font-size: 16px;
+  font-size: 12px;
   text-align: center;
 }
 
@@ -148,61 +125,28 @@ body {
 }
 
 .pressed {
-  box-shadow: 5px 5px 20px white;
+  /*box-shadow: 5px 5px 20px white;*/
   /*right: 10px;
   bottom: 10px;*/
 }
 
 .header {
-  /*font-family: 'Audiowide', cursive;
-  text-align: center;
-  font-weight: bold;
-  font-size: 5em;
-  color: #A6CA26;
-  background: #5f2c82; /* fallback for old browsers */
-  background: -webkit-linear-gradient(to left, #5f2c82 , #49a09d);
-  background: linear-gradient(to left, #5f2c82 , #49a09d);
-  padding: 10px 30px;
   border-radius: 10px;
-  font-family: 'Audiowide', cursive;
-  /*margin: 50px auto;*/
+  font-family: sans-serif;
   margin: 0 auto;
   text-align:center;
-  max-width:80%;
-  max-height:80;
   font-size:6.5em;
   color:#fff;
   letter-spacing: -7px;
   font-weight:700;
   text-transform:uppercase;
-  animation:blur .75s ease-out infinite;
-  text-shadow:0 0 5px #ffff00,
-      0 0 7px #ffff00;
 }
 
 h3 {
   text-align: center;
   font-weight: bold;
-  font-family: Futura, Helvetica, Garamond, Arial;;
+  font-family: sans-serif;
   font-size: 18px;
-  /*color: #A6CA26;*/
-}
-
-.creators {
-  color: white;
-  text-align: center;
-  display: block;
-  margin: 10;
-  max-heigh:30;
-  max-width:100%;
-}
-
-.name {
-  color: white;
-  text-align: center;
-  font-size: 16px;
-  font-family: Futura, Helvetica, Garamond, Arial;
-  font-weight: bolder;
 }
 
 a:link {
@@ -219,25 +163,25 @@ a:active {
   text-decoration: underline;
 }
 
-.person {
+/*.person {
   float: left;
   margin:  auto;
   width: calc(100% / 8);
   height:50%;
-}
+}*/
 
-.img {
+/*.img {
   border-radius: 10px;
   border: 5px solid black;
   width: 120px;
   height: 120px;
   align-items: center;
-}
+}*/
 
 #bindingWindow {
   text-align: center;
   width: 90%;
-  max-height:60%;
+  /*max-height:60%;*/
   margin: 0 auto;
 }
 
@@ -248,7 +192,7 @@ a:active {
 
   text-align: center;
   border-radius:8px;
-  max-width:90%;
+  /*max-width:90%;*/
 }
 .rebindNode {
   display: inline-block;
@@ -289,23 +233,30 @@ a:active {
 }
 
 canvas {
-  border: 4px solid black;
+  border: 4px solid white;
+}
+
+.tools {
+  margin-top: 25px;
+  float: left;
+  width: 33%
 }
 
 .levels {
-  padding: 20px 20px 20px 20px;
+  float: left;
+  margin-top: 25px;
+  margin-left: 15%;
+  /*padding: 20px 20px 20px 20px;*/
 }
 
 #navBar{
   max-width: 80%;
-  max-height: 80px;
+  height: 50px;
 }
 
 #navBar ul {
-  /*max-width:80%;*/
   list-style-type: none;
   margin: 0 auto;
-  /*padding: 0;*/
   overflow: hidden;
   background-color: #333;
   padding: 10px 30px;
@@ -314,16 +265,12 @@ canvas {
 
 #navBar li {
   float: right;
-  /*max-height: 80px;*/
 }
 
 #navBar li Login {
-    /*display: block;*/
     color: white;
     text-align: center;
-    /*padding: 14px 16px;*/
     text-decoration: none;
-    /*position: absolute;*/
 }
 
 #navBar li Login:hover {
@@ -345,4 +292,18 @@ ul {
 .floated {
   float: left;
   margin-right: 5px;
+}
+
+h2 {
+  font-family: sans-serif;
+  color: white;
+}
+
+.instrumentNav {
+  display: inline-block;
+}
+
+.white {
+  color: white;
+  font-family: sans-serif;
 }

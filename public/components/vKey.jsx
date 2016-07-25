@@ -13,7 +13,6 @@ var VKey = React.createClass ({
     return (
       <div className="key">
         <p className="keyLabel">{keyCodes[this.props.keyId]}</p>
-        <p className="filename">{ this.props.path.split('/')[2].slice(0, -4).split("-").join(" ")}</p>
         <audio className="unloaded" id={this.props.keyId} src={ this.props.path } onEnded={ this.handleAudioEnd } preload="auto"></audio>
       </div>
     )

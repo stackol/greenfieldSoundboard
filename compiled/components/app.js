@@ -24,7 +24,8 @@ var App = React.createClass({
       loggedIn: false,
       sideModals: [],
       keyMap: {},
-      recordTitles: []
+      recordTitles: [],
+      searchResults: []
     };
   },
   //once the component mounts, we set those states equal to the correct data.  We also hide the binding window using JQuery until it is required.
@@ -128,6 +129,27 @@ var App = React.createClass({
   searchButtonClick: function searchButtonClick() {
     this.setState({
       sideModals: []
+    });
+  },
+
+  setSearchResults: function setSearchResults(results) {
+    this.setState({
+      searchResults: results
+    });
+  },
+  addSearchResult: function addSearchResult(result) {
+    var tmp = this.state.searchResults;
+    tmp.push(result);
+    this.setState({
+      searchResults: tmp
+    });
+  },
+  getSearchResults: function getSearchResults() {
+    return this.state.searchResults;
+  },
+  clearSearchResults: function clearSearchResults() {
+    this.setState({
+      searchResults: []
     });
   },
 
@@ -246,7 +268,33 @@ var App = React.createClass({
               removeModal: this.removeModal
             })
           )
+        ),
+        React.createElement(
+          "li",
+          null,
+          React.createElement(Search, { searchInputClick: this.searchInputClick, searchButtonClick: this.searchButtonClick, setSearchResults: this.setSearchResults, addSearchResult: this.addSearchResult, clearSearchResults: this.clearSearchResults })
+        ),
+        React.createElement(
+          "li",
+          null,
+          React.createElement(SearchResults, { getSearchResults: this.getSearchResults })
+        ),
+        React.createElement(
+          "li",
+          null,
+          React.createElement(InstrumentList, { handleClick: this.bindTo })
         )
+      ),
+      React.createElement(
+        "div",
+        { id: "greeting" },
+        this.state.currentUser ? React.createElement(
+          "h2",
+          null,
+          "Hello, ",
+          this.state.currentUser,
+          "!!"
+        ) : null
       ),
       React.createElement(
         "div",
@@ -268,9 +316,6 @@ var App = React.createClass({
           }, this)
         )
       ),
-      React.createElement(Search, { searchInputClick: this.searchInputClick, searchButtonClick: this.searchButtonClick }),
-      React.createElement(SearchResults, null),
-      React.createElement(InstrumentList, { handleClick: this.bindTo }),
       React.createElement(
         "div",
         { id: "keyboardWindow", className: "keyboard" },
@@ -280,8 +325,12 @@ var App = React.createClass({
           );
         })
       ),
-      React.createElement(Levels, null),
-      React.createElement(Library, { recording: this.state.record, recordNames: this.state.recordTitles.toString(), clearRecord: this.clearRecord })
+      React.createElement(
+        "div",
+        { id: "tools" },
+        React.createElement(Levels, null),
+        React.createElement(Library, { recording: this.state.record, recordNames: this.state.recordTitles.toString(), clearRecord: this.clearRecord })
+      )
     );
   }
 });
@@ -289,13 +338,15 @@ var App = React.createClass({
 //This simulates a loading page. In all of our tests the server loaded the sound
 //files instantly but by the time we noticed this we already had an awesome
 //loading page up and running. This timeout feature honors that hard work
+
+//update: all cats should die
 setTimeout(function () {
-  document.getElementById('secretSound').pause();
+  // document.getElementById('secretSound').pause();
   ReactDOM.render(React.createElement(
     "div",
     null,
     React.createElement(App, null)
   ), document.getElementById('app'));
-}, 2000);
+}, 50);
 
 window.App = App;

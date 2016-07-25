@@ -79,10 +79,10 @@ class Search extends React.Component {
 
   render() {
     return (
-      <div>
-        <h3> Or search for a sound here: </h3>
+      <div className="white">
+        Or search for a sound here:
         <input id="search_field" onClick={ this.props.searchInputClick }></input>
-        <button onClick={ this.searchSounds }>Search</button>
+        <button className="button" onClick={ this.searchSounds }>Search</button>
       </div>
     );
   }
