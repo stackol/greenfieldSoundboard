@@ -12,7 +12,7 @@ var instruments = [
   'piano'
 ]
 
-var searchResults = ['bohee'];
+var searchResults = [];
 
 var map = {
   default: {
