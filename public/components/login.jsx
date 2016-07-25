@@ -72,7 +72,7 @@ class Login extends React.Component {
         { currentUser ?
           <div id="userGreeting">
             <br />
-            <h3>"Hello {currentUser}!"</h3>
+            <h3>Hello {currentUser}!</h3>
           </div> :
           null
         }
