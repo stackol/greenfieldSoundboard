@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- *   This file creates a levels display and equalizer for the app using the web audio api. All audio elements of the page are 
+ *   This file creates a levels display and equalizer for the app using the web audio api. All audio elements of the page are
  *   merged into one audio node, which then passes through a 10 channel equalizer implemented with 10 biquadfilters. From there
  *   it is passed to an analyzer node which collects the data for the levels visualization
  **/
@@ -17,8 +17,8 @@ var Levels = React.createClass({
 			ac: new window.AudioContext(),
 			analyzer: null,
 			filters: null,
-			width: 800, //  for the canvas element holding the levels display
-			height: 300,
+			width: 400, //  for the canvas element holding the levels display
+			height: 150,
 			presets: []
 		};
 	},
@@ -132,14 +132,11 @@ var Levels = React.createClass({
 			React.createElement(
 				'div',
 				{ className: 'levels' },
-				React.createElement('canvas', { width: this.state.width, height: this.state.height })
-			),
-			React.createElement(
-				'div',
-				null,
+				React.createElement('canvas', { width: this.state.width, height: this.state.height }),
+				React.createElement('br', null),
 				React.createElement(
 					'button',
-					{ type: 'button', onClick: this.startLevels },
+					{ className: 'button', onClick: this.startLevels },
 					'Click to initiliaze levels and equalizer'
 				),
 				React.createElement(

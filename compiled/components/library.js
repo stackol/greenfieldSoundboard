@@ -116,43 +116,42 @@ var Library = function (_React$Component) {
         { id: "library" },
         React.createElement(
           "div",
-          { id: "libraryrow" },
-          React.createElement(
-            "h2",
-            { style: { color: 'white' } },
-            "Record"
-          ),
-          React.createElement(SongList, { id: "songlist", songs: this.props.recordNames, handleClick: this.handleClick.bind(this) }),
-          React.createElement(
-            "h2",
-            { style: { color: 'white' } },
-            "Library"
-          ),
-          React.createElement(LibraryList, { id: "librarylist", records: this.state.library, handleClick: this.handlelibraryClick.bind(this) })
-        ),
-        React.createElement(
-          "div",
           null,
           React.createElement(
             "button",
-            { type: "button", onClick: this.playSong.bind(this) },
+            { className: "button", onClick: this.playSong.bind(this) },
             "Play Song"
           ),
           React.createElement(
             "button",
-            { type: "button", onClick: this.saveSong.bind(this) },
+            { className: "button", onClick: this.saveSong.bind(this) },
             "Save Song"
           ),
           React.createElement(
             "button",
-            { type: "button", onClick: this.clearSong.bind(this) },
+            { className: "button", onClick: this.clearSong.bind(this) },
             "Clear Song"
           ),
           React.createElement(
             "button",
-            { type: "button", onClick: this.getSonglibrary.bind(this) },
+            { className: "button", onClick: this.getSonglibrary.bind(this) },
             "Get Song Library"
+          ),
+          React.createElement(
+            "h2",
+            { style: { color: 'white' } },
+            "Record       Library "
           )
+        ),
+        React.createElement(
+          "div",
+          { id: "recordDiv" },
+          React.createElement(SongList, { id: "songlist", songs: this.props.recordNames, handleClick: this.handleClick.bind(this) })
+        ),
+        React.createElement(
+          "div",
+          { id: "libraryDiv" },
+          React.createElement(LibraryList, { id: "librarylist", records: this.state.library, handleClick: this.handlelibraryClick.bind(this) })
         )
       );
     }

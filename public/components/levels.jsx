@@ -127,7 +127,7 @@ var Levels = React.createClass({
 				<div className="levels">
 					<canvas width={this.state.width} height={this.state.height}></canvas>
 					<br />
-					<button type="button" onClick={this.startLevels}>Click to initiliaze levels and equalizer</button>
+					<button className="button" onClick={this.startLevels}>Click to initiliaze levels and equalizer</button>
 					<select onChange={this.changePreset}>
 						{
 							this.state.presets.map(function(preset, index) {

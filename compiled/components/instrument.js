@@ -5,10 +5,14 @@ var Instrument = function Instrument(_ref) {
   var handleClick = _ref.handleClick;
   return React.createElement(
     "div",
-    { className: "", onClick: function onClick() {
+    { className: "instrumentNav", onClick: function onClick() {
         return handleClick(instrument);
       } },
-    instrument
+    React.createElement(
+      "button",
+      { className: "button" },
+      instrument
+    )
   );
 };
 
