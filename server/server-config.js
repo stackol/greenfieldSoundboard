@@ -64,7 +64,6 @@ app.post('/login', function(req, res) {
             // log in
             // front-end: replace login button with logout button
             req.session.user = {id: user.get('id'), name: user.get('name')};
-            console.log(req.session.user);
             res.send(200, req.session.user.name);
           } else {
             //send response with flash, wrong password
@@ -73,6 +72,13 @@ app.post('/login', function(req, res) {
         });
       }
     });
+});
+
+// logout and delete user session
+app.post('/logout', function(req, res) {
+  delete req.session.user;
+  console.log("user session should be undefined", req.session.user);
+  res.send(200);
 });
 
 // post for '/signup', if successful adds user to db

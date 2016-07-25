@@ -32,14 +32,7 @@ class Login extends React.Component {
         password: this.state.password
       }),
       success: function(user){
-        // console.log('sucesss');
-        // that.setState({
-        //   showComponent: false,
-        //   loggedIn: true
-        // });
-        // console.log(data);
         that.props.loginSuccess(user);
-        // so the login fields become empty after login
         that.setState({
           email: '',
           password: ''
@@ -47,17 +40,9 @@ class Login extends React.Component {
       },
       error: function(err){
         console.log("Error!!", err);
-        console.log("arguments", arguments);
       }
     });
   }
-
-  // logout() {
-  //   $.ajax({
-  //     type: "POST",
-  //     url: "/logout"
-  //   });
-  // }
 
   render() {
     const loggedIn = this.props.loggedIn ? 'Logout' : 'Login';

@@ -82,6 +82,7 @@ var App = React.createClass({
         currentUser: null,
         loggedIn: false
       });
+      this.logout();
     } else {
       var newSideModals = this.state.sideModals.concat(['login']);
       this.setState({
@@ -97,6 +98,19 @@ var App = React.createClass({
       sideModals: newSideModals,
       loggedIn: true,
       currentUser: user
+    });
+  },
+
+  logout: function() {
+    $.ajax({
+      type: "POST",
+      url: "/logout",
+      success: function(){
+        console.log("success");
+      },
+      error: function(err){
+        console.log("Error!!", err);
+      }
     });
   },
 
