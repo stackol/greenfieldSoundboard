@@ -41,8 +41,5 @@ jspm_packages
 
 # compiled shit
 compiled
-<<<<<<< 97b441a30081aeaa510bcbf45d891b97a50c7eb3
 server/db
 dist
-=======
->>>>>>> fixed levels not listening to all the sounds
