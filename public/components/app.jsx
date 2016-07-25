@@ -21,7 +21,8 @@ var App = React.createClass({
       loggedIn: false,
       sideModals: [],
       keyMap: {},
-      recordTitles:[]
+      recordTitles:[],
+      searchResults: [],
     }
 
   ),
@@ -125,6 +126,27 @@ var App = React.createClass({
     this.setState({
       sideModals: []
     });
+  },
+
+  setSearchResults: function(results){
+    this.setState({
+      searchResults: results
+    });
+  },
+  addSearchResult: function(result){
+    var tmp = this.state.searchResults;
+    tmp.push(result);
+    this.setState({
+      searchResults: tmp
+    })
+  },
+  getSearchResults: function(){
+    return this.state.searchResults;
+  },
+  clearSearchResults: function(){
+    this.setState({
+      searchResults: []
+    })
   },
 
   //this is our keyhandler function.  It handles all keypress events on the DOM.  Plays/stops the appropriate sound file,
@@ -237,8 +259,8 @@ var App = React.createClass({
            }
            </ul>
        </div>
-       <Search searchInputClick={ this.searchInputClick } searchButtonClick={ this.searchButtonClick } />
-       <SearchResults />
+       <Search searchInputClick={ this.searchInputClick } searchButtonClick={ this.searchButtonClick } setSearchResults={ this.setSearchResults } addSearchResult={ this.addSearchResult } clearSearchResults={ this.clearSearchResults } />
+       <SearchResults getSearchResults={ this.getSearchResults } />
        <InstrumentList handleClick={ this.bindTo } />
        <div id='keyboardWindow' className="keyboard">
        {
