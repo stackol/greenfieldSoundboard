@@ -10,7 +10,7 @@ class Library extends React.Component{
       title:""
     }
    }
-  
+
   getSonglibrary() {
     var that = this;
      $.ajax({
@@ -84,15 +84,13 @@ componentDidMount(){
 
   render() {
      return (
-    <div id='library'>    
-          
-        <div id='libraryrow'>
-        <h2 style={{color:'white'}}>Record</h2> 
-           <SongList id='songlist' songs={this.props.recordNames} handleClick={this.handleClick.bind(this)}/> 
-           <h2 style={{color:'white'}}>Library</h2> 
+    <div id='library'>
+
+        <h2 style={{color:'white'}}>Record</h2>
+           <SongList id='songlist' songs={this.props.recordNames} handleClick={this.handleClick.bind(this)}/>
+           <h2 style={{color:'white'}}>Library</h2>
            <LibraryList id='librarylist' records={this.state.library} handleClick={this.handlelibraryClick.bind(this)}/>
 
-        </div>
       <div>
          <button type="button" onClick={this.playSong.bind(this)}>Play Song</button>
          <button type="button" onClick={this.saveSong.bind(this)}>Save Song</button>

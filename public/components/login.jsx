@@ -56,13 +56,6 @@ class Login extends React.Component {
           null :
           <button type="button" className="button" onClick={this.props._onLoginButtonClick}>{loggedIn}</button>
         }
-        { currentUser ?
-          <div id="userGreeting">
-            <br />
-            <h3>Hello {currentUser}!</h3>
-          </div> :
-          null
-        }
         { sideModals.indexOf('login') !== -1 ?
           <div id="loginForm">
             <p>
